@@ -67,18 +67,18 @@ export function ReceiptDetailModal({ receipt, connections = [], onClose, onSelec
             </div>
 
             {receipt.amount !== null && (
-              <div className="pt-2 border-t border-dark-border flex justify-between items-center text-sm font-bold text-white">
+              <div className="pt-2 border-t border-white/10 flex justify-between items-center text-sm font-bold text-white">
                 <span>Total Amount:</span>
-                <span className="text-emerald-400">${receipt.amount.toFixed(2)} {receipt.currency}</span>
+                <span className="text-emerald-400 font-mono">${receipt.amount.toFixed(2)} {receipt.currency}</span>
               </div>
             )}
 
             {receipt.location && (
-              <div className="pt-2 border-t border-dark-border flex items-start gap-1.5 text-cyan-300">
+              <div className="pt-2 border-t border-white/10 flex items-start gap-1.5 text-cyan-300">
                 <MapPin className="w-4 h-4 shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold">{receipt.location.name}</span>
-                  <div className="text-[11px] text-gray-400">{receipt.location.address}</div>
+                  <div className="text-[11px] text-zinc-400">{receipt.location.address}</div>
                 </div>
               </div>
             )}
@@ -86,13 +86,13 @@ export function ReceiptDetailModal({ receipt, connections = [], onClose, onSelec
 
           {/* Metadata Section */}
           <div>
-            <h4 className="text-xs font-mono text-gray-400 uppercase tracking-wider mb-2">
+            <h4 className="text-xs font-mono text-zinc-400 uppercase tracking-wider mb-2">
               Raw Record Metadata
             </h4>
-            <div className="bg-dark-paper border border-dark-border rounded-xl p-4 font-mono text-xs text-emerald-300 overflow-x-auto space-y-1">
+            <div className="glass-card border border-white/10 rounded-2xl p-4 font-mono text-xs text-emerald-300 overflow-x-auto space-y-1.5 backdrop-blur-md">
               {Object.entries(receipt.metadata || {}).map(([key, val]) => (
-                <div key={key} className="flex justify-between gap-4">
-                  <span className="text-gray-400">{key}:</span>
+                <div key={key} className="flex justify-between gap-4 py-0.5 border-b border-white/5 last:border-0">
+                  <span className="text-zinc-400">{key}:</span>
                   <span className="text-white font-semibold truncate">{String(val)}</span>
                 </div>
               ))}
@@ -102,7 +102,7 @@ export function ReceiptDetailModal({ receipt, connections = [], onClose, onSelec
           {/* Connected Receipts Section */}
           {relevantConns.length > 0 && (
             <div>
-              <h4 className="text-xs font-mono text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+              <h4 className="text-xs font-mono text-zinc-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
                 <GitMerge className="w-3.5 h-3.5 text-emerald-400" />
                 Discovered Connections ({relevantConns.length})
               </h4>
@@ -114,10 +114,10 @@ export function ReceiptDetailModal({ receipt, connections = [], onClose, onSelec
                     <div
                       key={idx}
                       onClick={() => onSelectConnected && onSelectConnected(other)}
-                      className="p-3 rounded-xl bg-dark-card border border-dark-border hover:border-emerald-500/40 cursor-pointer flex items-center justify-between transition-colors"
+                      className="p-3.5 rounded-2xl glass-card border border-white/10 hover:border-emerald-500/40 cursor-pointer flex items-center justify-between transition-all hover:-translate-y-0.5 active:scale-[0.99] group"
                     >
                       <div>
-                        <div className="text-xs font-receipt font-bold text-white">
+                        <div className="text-xs font-receipt font-bold text-white group-hover:text-emerald-300 transition-colors">
                           {other.title}
                         </div>
                         <div className="text-[11px] font-mono text-emerald-400 mt-0.5">
@@ -125,8 +125,8 @@ export function ReceiptDetailModal({ receipt, connections = [], onClose, onSelec
                         </div>
                       </div>
 
-                      <span className="text-xs text-gray-400 flex items-center gap-1">
-                        Inspect <ArrowRight className="w-3.5 h-3.5" />
+                      <span className="text-xs text-zinc-400 group-hover:text-white flex items-center gap-1 transition-colors font-mono">
+                        Inspect <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                       </span>
                     </div>
                   )
@@ -137,10 +137,10 @@ export function ReceiptDetailModal({ receipt, connections = [], onClose, onSelec
         </div>
 
         {/* Footer */}
-        <div className="pt-4 border-t border-dark-border text-right">
+        <div className="pt-4 border-t border-white/10 text-right">
           <button
             onClick={onClose}
-            className="px-5 py-2 rounded-xl bg-dark-card border border-dark-border text-xs font-semibold text-gray-300 hover:text-white"
+            className="px-5 py-2.5 rounded-xl glass-pill border border-white/15 text-xs font-semibold text-zinc-300 hover:text-white hover:border-white/30 transition-all active:scale-95"
           >
             Close Receipt
           </button>

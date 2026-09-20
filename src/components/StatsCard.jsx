@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import gsap from 'gsap'
 import { Receipt, GitMerge, Sparkles, Layers } from 'lucide-react'
 
@@ -18,13 +18,39 @@ const COLOR_MAP = {
 
 /**
  * StatsCard renders a KPI metric with glassmorphism, spotlight illumination,
- * and smooth GSAP elevation on hover.
+ * GSAP numerical roll-up counters, and tactile 3D elevation on hover.
  */
 export function StatsCard({ label, value, subtext, type = 'receipts', color = 'emerald' }) {
   const cardRef = useRef(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [displayedValue, setDisplayedValue] = useState(value)
   const IconComponent = ICON_MAP[type] || Receipt
   const colorStyles = COLOR_MAP[color] || COLOR_MAP.emerald
+
+  // GSAP Animated Numerical Counter Roll-Up
+  useEffect(() => {
+    const rawStr = String(value || '')
+    const match = rawStr.match(/^(\d+)(.*)$/)
+
+    if (match) {
+      const targetNum = parseInt(match[1], 10)
+      const suffix = match[2]
+      const countObj = { val: 0 }
+
+      const tween = gsap.to(countObj, {
+        val: targetNum,
+        duration: 1.2,
+        ease: 'power2.out',
+        onUpdate: () => {
+          setDisplayedValue(`${Math.round(countObj.val)}${suffix}`)
+        }
+      })
+
+      return () => tween.kill()
+    } else {
+      setDisplayedValue(value)
+    }
+  }, [value])
 
   const handleMouseMove = (e) => {
     if (!cardRef.current) return
@@ -39,7 +65,7 @@ export function StatsCard({ label, value, subtext, type = 'receipts', color = 'e
     if (!cardRef.current) return
     gsap.to(cardRef.current, {
       scale: 1.03,
-      y: -3,
+      y: -4,
       duration: 0.25,
       ease: 'power2.out'
     })
@@ -55,13 +81,33 @@ export function StatsCard({ label, value, subtext, type = 'receipts', color = 'e
     })
   }
 
+  const handleMouseDown = () => {
+    if (!cardRef.current) return
+    gsap.to(cardRef.current, {
+      scale: 0.98,
+      duration: 0.1,
+      ease: 'power2.out'
+    })
+  }
+
+  const handleMouseUp = () => {
+    if (!cardRef.current) return
+    gsap.to(cardRef.current, {
+      scale: 1.03,
+      duration: 0.15,
+      ease: 'power2.out'
+    })
+  }
+
   return (
     <div 
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="glass-card rounded-2xl p-5 shadow-xl relative overflow-hidden group hover:border-emerald-500/40 transition-all cursor-pointer select-none"
+      onMouseDown={handleMouseDown}
+      onMouseUp={handleMouseUp}
+      className="glass-card rounded-2xl p-5 shadow-xl relative overflow-hidden group hover:border-emerald-500/40 transition-colors cursor-pointer select-none"
     >
       {/* Spotlight Hover Glow */}
       <div 
@@ -81,7 +127,7 @@ export function StatsCard({ label, value, subtext, type = 'receipts', color = 'e
       </div>
 
       <div className="font-sans font-bold text-2xl sm:text-3xl text-white tracking-tight group-hover:text-emerald-300 transition-colors relative z-10">
-        {value}
+        {displayedValue}
       </div>
 
       <div className="text-xs text-zinc-400 mt-1 font-mono relative z-10">

@@ -56,26 +56,26 @@ export function Navbar({ activePage, setActivePage, stats }) {
               </button>
 
               {openDropdown === 'explore-dropdown' && (
-                <div className="absolute top-full left-0 w-60 mt-1 bg-[#111215] border border-[#23252a] rounded-xl shadow-2xl p-2 z-50 text-xs">
+                <div className="absolute top-full left-0 w-64 mt-2 glass-panel border border-white/15 rounded-2xl shadow-2xl p-2 z-50 text-xs backdrop-blur-2xl">
                   <button 
                     onClick={() => { setActivePage('home'); setOpenDropdown(null); }}
-                    className="w-full text-left px-3 py-2 rounded-lg hover:bg-zinc-800/80 text-zinc-300 hover:text-white transition-colors flex items-center justify-between"
+                    className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-white/10 text-zinc-300 hover:text-white transition-all flex items-center justify-between group"
                   >
                     <div>
-                      <div className="font-medium text-white">Overview Dashboard</div>
-                      <div className="text-[11px] text-zinc-500">Summary & pattern insights</div>
+                      <div className="font-medium text-white group-hover:text-amber-300 transition-colors">Overview Dashboard</div>
+                      <div className="text-[11px] text-zinc-400">Summary & pattern insights</div>
                     </div>
-                    <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                    <Sparkles className="w-3.5 h-3.5 text-amber-400 group-hover:scale-110 transition-transform" />
                   </button>
                   <button 
                     onClick={() => { setActivePage('explore'); setOpenDropdown(null); }}
-                    className="w-full text-left px-3 py-2 rounded-lg hover:bg-zinc-800/80 text-zinc-300 hover:text-white transition-colors flex items-center justify-between"
+                    className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-white/10 text-zinc-300 hover:text-white transition-all flex items-center justify-between group"
                   >
                     <div>
-                      <div className="font-medium text-white">Explore Receipts</div>
-                      <div className="text-[11px] text-zinc-500">{stats?.totalReceipts || 0} Normalized records</div>
+                      <div className="font-medium text-white group-hover:text-emerald-300 transition-colors">Explore Receipts</div>
+                      <div className="text-[11px] text-zinc-400">{stats?.totalReceipts || 0} Normalized records</div>
                     </div>
-                    <Layers className="w-3.5 h-3.5 text-zinc-400" />
+                    <Layers className="w-3.5 h-3.5 text-zinc-400 group-hover:scale-110 transition-transform" />
                   </button>
                 </div>
               )}
@@ -98,26 +98,26 @@ export function Navbar({ activePage, setActivePage, stats }) {
               </button>
 
               {openDropdown === 'chapters-dropdown' && (
-                <div className="absolute top-full left-0 w-64 mt-1 bg-[#111215] border border-[#23252a] rounded-xl shadow-2xl p-2 z-50 text-xs">
+                <div className="absolute top-full left-0 w-64 mt-2 glass-panel border border-white/15 rounded-2xl shadow-2xl p-2 z-50 text-xs backdrop-blur-2xl">
                   <button 
                     onClick={() => { setActivePage('connections'); setOpenDropdown(null); }}
-                    className="w-full text-left px-3 py-2 rounded-lg hover:bg-zinc-800/80 text-zinc-300 hover:text-white transition-colors flex items-center justify-between"
+                    className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-white/10 text-zinc-300 hover:text-white transition-all flex items-center justify-between group"
                   >
                     <div>
-                      <div className="font-medium text-white">Connect the Dots</div>
-                      <div className="text-[11px] text-zinc-500">Interactive node network</div>
+                      <div className="font-medium text-white group-hover:text-emerald-300 transition-colors">Connect the Dots</div>
+                      <div className="text-[11px] text-zinc-400">Interactive node network</div>
                     </div>
-                    <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded border border-emerald-500/20">Graph</span>
+                    <span className="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-md border border-emerald-500/20 font-mono">Graph</span>
                   </button>
                   <button 
                     onClick={() => { setActivePage('chapters'); setOpenDropdown(null); }}
-                    className="w-full text-left px-3 py-2 rounded-lg hover:bg-zinc-800/80 text-zinc-300 hover:text-white transition-colors flex items-center justify-between"
+                    className="w-full text-left px-3 py-2.5 rounded-xl hover:bg-white/10 text-zinc-300 hover:text-white transition-all flex items-center justify-between group"
                   >
                     <div>
-                      <div className="font-medium text-white">Life Chapters</div>
-                      <div className="text-[11px] text-zinc-500">Chronological moments</div>
+                      <div className="font-medium text-white group-hover:text-amber-300 transition-colors">Life Chapters</div>
+                      <div className="text-[11px] text-zinc-400">Chronological moments</div>
                     </div>
-                    <span className="text-[10px] bg-amber-500/10 text-amber-400 px-1.5 py-0.5 rounded border border-amber-500/20">Timeline</span>
+                    <span className="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded-md border border-amber-500/20 font-mono">Timeline</span>
                   </button>
                 </div>
               )}

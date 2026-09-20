@@ -15,6 +15,7 @@ export function Explore({ receipts = [], connections = [], onSelectReceipt, onOp
 
   const emptyStateRef = useRef(null)
   const emptyIconRef = useRef(null)
+  const gridContainerRef = useRef(null)
 
   // Extract categories present strictly in the dataset
   const categories = useMemo(() => {
@@ -84,6 +85,20 @@ export function Explore({ receipts = [], connections = [], onSelectReceipt, onOp
     }, 250)
   }
 
+  // GSAP cascade staggered entrance for cards
+  useEffect(() => {
+    if (gridContainerRef.current && filteredReceipts.length > 0 && !isSearching) {
+      const cards = gridContainerRef.current.children
+      if (cards && cards.length > 0) {
+        gsap.fromTo(
+          cards,
+          { opacity: 0, y: 22, scale: 0.96 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.38, stagger: 0.03, ease: 'power2.out' }
+        )
+      }
+    }
+  }, [filteredReceipts, viewMode, isSearching])
+
   // GSAP animation for empty state
   useEffect(() => {
     if (filteredReceipts.length === 0 && emptyStateRef.current) {
@@ -121,7 +136,7 @@ export function Explore({ receipts = [], connections = [], onSelectReceipt, onOp
     <div className="space-y-8 pb-16">
       
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-dark-border pb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
         <div>
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full inline-flex items-center gap-1.5 mb-2">
             <Layers className="w-3.5 h-3.5" />
@@ -130,19 +145,19 @@ export function Explore({ receipts = [], connections = [], onSelectReceipt, onOp
           <h1 className="text-3xl sm:text-4xl font-receipt font-bold text-white">
             Explore Your Receipts
           </h1>
-          <p className="text-xs text-gray-400 mt-1">
+          <p className="text-xs text-zinc-400 mt-1">
             Browse through individual music streams, transactions, places, expenses, and notes with tactile 3D hover feedback.
           </p>
         </div>
 
         {/* View Mode Toggles */}
-        <div className="flex items-center gap-2 bg-dark-card p-1 rounded-xl border border-dark-border self-start sm:self-auto">
+        <div className="flex items-center gap-2 glass-pill p-1 rounded-xl self-start sm:self-auto">
           <button
             onClick={() => setViewMode('grid')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
               viewMode === 'grid' 
-                ? 'bg-emerald-500 text-black font-bold' 
-                : 'text-gray-400 hover:text-white'
+                ? 'bg-emerald-500 text-black font-bold shadow-glow-emerald' 
+                : 'text-zinc-400 hover:text-white'
             }`}
           >
             <LayoutGrid className="w-3.5 h-3.5" />
@@ -152,8 +167,8 @@ export function Explore({ receipts = [], connections = [], onSelectReceipt, onOp
             onClick={() => setViewMode('spool')}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-all ${
               viewMode === 'spool' 
-                ? 'bg-emerald-500 text-black font-bold' 
-                : 'text-gray-400 hover:text-white'
+                ? 'bg-emerald-500 text-black font-bold shadow-glow-emerald' 
+                : 'text-zinc-400 hover:text-white'
             }`}
           >
             <ScrollText className="w-3.5 h-3.5" />
@@ -193,7 +208,7 @@ export function Explore({ receipts = [], connections = [], onSelectReceipt, onOp
         /* Receipts Grid / Tape View */
         filteredReceipts.length > 0 ? (
           viewMode === 'grid' ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div ref={gridContainerRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredReceipts.map((receipt) => (
                 <ReceiptCard
                   key={receipt.id}
@@ -208,17 +223,17 @@ export function Explore({ receipts = [], connections = [], onSelectReceipt, onOp
             </div>
           ) : (
             /* Continuous Tape Spool View */
-            <div className="max-w-xl mx-auto space-y-4 bg-dark-paper border border-dark-border p-6 rounded-3xl shadow-2xl relative">
-              <div className="text-center pb-4 border-b border-dashed border-dark-border">
-                <span className="font-receipt font-bold text-white text-lg block">
+            <div className="max-w-xl mx-auto space-y-4 glass-panel border border-white/10 p-6 sm:p-8 rounded-3xl shadow-2xl relative">
+              <div className="text-center pb-4 border-b border-dashed border-white/15">
+                <span className="font-receipt font-bold text-white text-lg block tracking-wider">
                   🧾 DIGITAL RECEIPT SPOOL
                 </span>
-                <span className="text-[10px] font-mono text-gray-400">
+                <span className="text-[10px] font-mono text-zinc-400">
                   CHRONOLOGICAL RECORD LOG
                 </span>
               </div>
 
-              <div className="space-y-4">
+              <div ref={gridContainerRef} className="space-y-4">
                 {filteredReceipts.map((receipt) => (
                   <ReceiptCard
                     key={receipt.id}
@@ -234,11 +249,11 @@ export function Explore({ receipts = [], connections = [], onSelectReceipt, onOp
           /* Rich GSAP-Animated Empty State */
           <div 
             ref={emptyStateRef}
-            className="text-center py-16 p-8 bg-dark-card border border-dark-border rounded-3xl space-y-5 max-w-lg mx-auto shadow-2xl backdrop-blur-md"
+            className="text-center py-16 p-8 glass-card border border-white/10 rounded-3xl space-y-5 max-w-lg mx-auto shadow-2xl backdrop-blur-xl"
           >
             <div 
               ref={emptyIconRef}
-              className="w-16 h-16 rounded-2xl bg-[#15171c] border border-dark-border text-emerald-400 flex items-center justify-center mx-auto shadow-glow-emerald/30"
+              className="w-16 h-16 rounded-2xl bg-[#15171c] border border-white/10 text-emerald-400 flex items-center justify-center mx-auto shadow-glow-emerald/30"
             >
               <SearchX className="w-8 h-8" />
             </div>
@@ -246,7 +261,7 @@ export function Explore({ receipts = [], connections = [], onSelectReceipt, onOp
               <h3 className="text-xl font-sans font-bold text-white">
                 No Matching Receipts Found
               </h3>
-              <p className="text-xs text-gray-400 max-w-sm mx-auto mt-1 leading-relaxed">
+              <p className="text-xs text-zinc-400 max-w-sm mx-auto mt-1 leading-relaxed">
                 We couldn't find any receipt records matching <span className="text-emerald-400 font-mono">"{searchQuery || selectedCategory}"</span>. Try adjusting your search query or reset filters.
               </p>
             </div>

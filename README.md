@@ -5,21 +5,22 @@
 [![Vite](https://img.shields.io/badge/Vite-6.x-646CFF?logo=vite&logoColor=white)](https://vite.dev/)
 [![React](https://img.shields.io/badge/React-19.x-61DAFB?logo=react&logoColor=black)](https://react.dev/)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Three.js Engine](https://img.shields.io/badge/Three.js-WebGL_3D-black?logo=three.js&logoColor=white)](https://threejs.org/)
+[![GSAP](https://img.shields.io/badge/GSAP-3.14-88CE02?logo=greensock&logoColor=white)](https://greensock.com/gsap/)
 [![React Flow](https://img.shields.io/badge/@xyflow/react-12.x-FF0072?logo=react&logoColor=white)](https://reactflow.dev/)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.x-0055FF?logo=framer&logoColor=white)](https://www.framer.com/motion/)
-[![Three.js Engine](https://img.shields.io/badge/Three.js-Engine-black?logo=three.js&logoColor=white)](https://threejs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ---
 
 ## 🌟 Overview
 
-**Your Life in Receipts** is a personal digital archaeology platform that ingests multi-stream activity data—music streams, payment transactions, recurring expenses, GPS check-ins, and personal notes—and automatically synthesizes them into meaningful life chapters, synchronized moments, and interactive graph constellations.
+**Your Life in Receipts** is a personal digital archaeology platform that ingests multi-stream activity data—music streams, payment transactions, recurring expenses, GPS check-ins, and personal notes—and automatically synthesizes them into meaningful life chapters, synchronized moments, and interactive 3D graph constellations.
 
 Instead of looking at isolated bank statements or listening histories in individual silos, **Your Life in Receipts** uncovers hidden correlations:
 - *What song was playing when you bought that late-night coffee?*
 - *What notes were written during a creative sprint at your favorite café?*
-- *How did your habits and soundtrack evolve across different seasons of life?*
+- *How did your habits, soundtrack, and environment evolve across different seasons of life?*
 
 ---
 
@@ -27,7 +28,7 @@ Instead of looking at isolated bank statements or listening histories in individ
 
 Modern individuals produce an immense volume of digital artifacts across dozens of isolated applications every day:
 - **Data Silos**: Spotify tracks listening history, Apple Card records spending transactions, Apple Notes captures thoughts, and Google Maps captures location history—yet none of these platforms communicate with one another.
-- **Context Collapse**: Reviewing a financial transaction months later feels sterile. You see a $4.75 charge at a coffee shop, but lose the emotional context: what you were working on, what track was playing in your headphones, or what personal milestone occurred that afternoon.
+- **Context Collapse**: Reviewing a financial transaction months later feels sterile. You see a \$4.75 charge at a coffee shop, but lose the emotional context: what you were working on, what track was playing in your headphones, or what personal milestone occurred that afternoon.
 - **Cognitive Overload**: Raw data logs and monthly statements are passive and tedious. Users lack an engaging, visual way to explore the serendipitous intersections of their personal timeline.
 
 ---
@@ -35,25 +36,32 @@ Modern individuals produce an immense volume of digital artifacts across dozens 
 ## 💡 Solution
 
 **Your Life in Receipts** transforms fragmented data into an interactive, memorable life tapestry:
-1. **Universal Ingestion & Normalization**: Maps diverse data sources into a canonical schema.
+1. **Universal Ingestion & Normalization**: Maps diverse data sources into a canonical `NormalizedReceipt` schema.
 2. **Heuristic Correlation Engine**: Detects co-occurrences using temporal proximity, venue matching, and semantic topic tags.
 3. **Automated Moment Clustering**: Bundles closely linked events into multi-sensory "Life Moments".
-4. **Narrative Chapter Generation**: Chronologically segments life into thematic eras.
-5. **Interactive Constellation & Graph Exploration**: Offers both an ambient interactive constellation canvas and a full node-link relationship diagram powered by React Flow and Three.js-inspired canvas visuals.
+4. **Narrative Chapter Generation**: Chronologically segments life into thematic eras and behavioral trends.
+5. **Interactive 3D WebGL & Node Constellations**: Offers both an ambient interactive Three.js 3D WebGL constellation and a full node-link relationship diagram powered by React Flow.
+6. **Modern Glassmorphism & GSAP Motion**: Polished with frosted glass panels, magnetic physics, numerical roll-up counters, and dynamic cursor spotlights.
 
 ---
 
 ## ✨ Key Features
 
 - 🌐 **Multi-Stream Data Ingestion**: Unified normalization pipeline across Spotify tracks, bank transactions, recurring subscriptions, GPS check-ins, and markdown notes.
+- 🌌 **Three.js WebGL 3D Constellation**: Real-time 3D particle constellation engine with raycaster-driven hover states, camera fly-to orbits, and dynamic node connections.
+- 💫 **GSAP Modern Motion Suite**:
+  - Sequential entrance timeline for Hero headline, badges, and CTAs.
+  - Magnetic button physics with elastic spring restitution (`elastic.out`).
+  - Animated numerical roll-up counters for KPI metrics (`StatsCard`).
+  - Staggered cascade entrance grid when filtering or searching receipts.
+  - Dynamic cursor spotlight illumination and 3D perspective tilt on hover.
+- 💎 **Glassmorphism Design System**: Frosted panels (`.glass-panel`), frosted cards (`.glass-card`), and glass pills (`.glass-pill`) with translucent tinting and specular edge bevels.
 - ⚡ **Heuristic Connection Scoring Engine**: Multi-factor scoring algorithm evaluating temporal proximity, geographic overlap, semantic tag intersection, and cross-category synergies.
 - 🔮 **Synchronized Life Moments**: Automated clustering algorithm grouping high-density, multi-modal events occurring within localized timeframes into rich narrative moments.
 - 📖 **Narrative Life Chapters**: Chronological era generator extracting distinct life phases with dominant themes, top environments, and focus metrics.
-- 🌌 **Interactive Constellation Canvas**: Ambient 2D/3D visual space plotting data receipts as glowing nodes with dynamic connection lines.
 - 🕸️ **Node-Link Relationship Graph**: Interactive graph canvas powered by `@xyflow/react` with custom node renderers, filters, and relationship strength badges.
 - 📊 **Automated Behavioral Insights**: Algorithmic detection of night-owl habits, soundtrack correlation, focus anchors, and spend dynamics.
-- 🔍 **Real-Time Search & Filtering**: Multi-facet filter bar to quickly query by category, tag, or keyword.
-- 📱 **Modern Dark-Mode UI**: Crafted with Tailwind CSS, Lucide icons, and micro-animations with Framer Motion.
+- 🛡️ **Comprehensive UX Resilience**: Custom animated loading skeleton beams, error fallback states with retry handlers, and smooth scroll progress indicator.
 
 ---
 
@@ -62,7 +70,7 @@ Modern individuals produce an immense volume of digital artifacts across dozens 
 The platform functions in a four-stage analytical pipeline:
 
 ```text
-[ Raw Data Streams ] ──> [ Normalizer ] ──> [ Correlation & Clustering ] ──> [ Reactive Visual UI ]
+[ Raw Data Streams ] ──> [ Normalizer ] ──> [ Correlation & Clustering ] ──> [ Three.js Engine & Reactive UI ]
 ```
 
 1. **Ingestion & Normalization**: Diverse data structures (JSON records from music, banking, GPS, notes) are transformed into uniform `NormalizedReceipt` objects.
@@ -90,12 +98,12 @@ The platform functions in a four-stage analytical pipeline:
 | :--- | :--- | :--- |
 | **Framework** | [React 19](https://react.dev/) | Component architecture, state management & reactive UI |
 | **Build Tool** | [Vite 6](https://vite.dev/) | Lightning-fast HMR and optimized production bundling |
-| **Styling** | [Tailwind CSS 3.4](https://tailwindcss.com/) | Modern utility-first responsive styling & custom dark theme |
-| **PostCSS** | [Autoprefixer](https://github.com/postcss/autoprefixer) | Vendor prefixing and CSS optimization |
+| **3D WebGL Engine** | [Three.js](https://threejs.org/) | 3D particle universe, raycasting node selection & orbit controls |
+| **Animation Engine** | [GSAP 3](https://greensock.com/gsap/) | Magnetic physics, numerical roll-up counters, cascade entrances & spotlights |
+| **Transition Animation** | [Framer Motion 12](https://www.framer.com/motion/) | Smooth layout transitions, modals, and route switching |
+| **Styling** | [Tailwind CSS 3.4](https://tailwindcss.com/) | Modern utility-first styling, glassmorphic design tokens & dark theme |
 | **Graph Visualization** | [@xyflow/react 12](https://reactflow.dev/) | Interactive node-link connection graph |
-| **Visual / 3D Engine** | [Three.js / Canvas](https://threejs.org/) | Constellation rendering engine, particle effects & ambient graph |
-| **Animation** | [Framer Motion 12](https://www.framer.com/motion/) | Smooth layout transitions, modals, and hover effects |
-| **Icons** | [Lucide React](https://lucide.dev/) | Modern, clean vector iconography |
+| **Icons** | [Lucide React](https://lucide.dev/) | Modern vector iconography |
 | **Delight** | [Canvas Confetti](https://www.npmjs.com/package/canvas-confetti) | Moment celebration micro-interactions |
 
 ---
@@ -126,25 +134,25 @@ External API / Dataset
 flowchart TD
     U([User])
     UI[React UI - Pages: Home, Explore, Connections, Chapters]
-    COMP[Components - Cards, Modals, FilterBar, Canvas]
-    STATE[State / Hooks - useState, useMemo, custom stores]
-    THREE[Three.js Engine / Interactive Constellation Canvas]
+    COMP[Components - Cards, Modals, FilterBar, Navigation]
+    STATE[State / Hooks - useState, useMemo, Navigation State]
+    THREE[Three.js Engine - WebGL Particle Constellation & Raycasting]
     DATA[Data Layer - Normalizer, Connection Engine, Insight Engine]
     API[(External API / Dataset - Spotify, Transactions, Expenses, Notes, GPS)]
 
     U -->|Interacts / Filters / Explores| UI
     UI -->|Renders & Composes| COMP
     COMP -->|Dispatches Events & Consumes| STATE
-    STATE -->|Provides Graph Coordinates & State| THREE
+    STATE -->|Provides Graph Coordinates & Hover State| THREE
     STATE -->|Queries & Transforms| DATA
     DATA -->|Ingests & Normalizes| API
 ```
 
-1. **User**: The end user navigating timelines, filtering receipts, triggering moment story overlays, and interacting with node graphs.
-2. **React UI**: Top-level page controllers (`Home.jsx`, `Explore.jsx`, `Connections.jsx`, `Chapters.jsx`) directing the view state and layouts.
-3. **Components**: Encapsulated UI components (`ReceiptCard`, `MomentStoryModal`, `ReceiptDetailModal`, `Navbar`, `FilterBar`, `StatsCard`).
+1. **User**: Navigating timelines, filtering receipts, triggering moment stories, and interacting with 3D nodes.
+2. **React UI**: Top-level page controllers (`Home.jsx`, `Explore.jsx`, `Connections.jsx`, `Chapters.jsx`) directing view states.
+3. **Components**: Modular sub-components (`HeroSection`, `DashboardMockup`, `PatternDiscoveries`, `FeaturedMoments`, `ReceiptCard`, `StatsCard`, `ReceiptDetailModal`, `MomentStoryModal`).
 4. **State / Hooks**: Reactive data layer coordinating normalized memory with React hooks (`useState`, `useMemo`), caching connection graphs and calculated insight statistics.
-5. **Three.js Engine**: Custom high-performance rendering canvas powering dynamic radiant connection lines, glowing star clusters, and spatial node layouts.
+5. **Three.js Engine**: High-performance WebGL canvas rendering spatial node clusters, radiant particle links, camera damping, and interactive raycasting.
 6. **Data Layer**: Algorithmic core containing `normalizeData.js`, `connections.js`, `insights.js`, and `chapters.js` implementing heuristic scoring and era segmentation.
 7. **External API / Dataset**: Source mock and production API inputs (`spotify.json`, `transactions.json`, `expenses.json`, `locations.json`, `notes.json`).
 
@@ -161,10 +169,14 @@ FrontendArena/
 ├── tailwind.config.js              # Custom Tailwind theme, colors, fonts, and animations
 ├── vite.config.js                  # Vite bundler configuration with React plugin
 ├── ui.png                          # Application interface preview screenshot
+├── README.md                       # Comprehensive project documentation
 ├── src/
 │   ├── main.jsx                    # Application entry point rendering <App /> to DOM
 │   ├── App.jsx                     # Root application container, state store & page router
-│   ├── index.css                   # Global styles, Tailwind directives, custom scrollbars
+│   ├── index.css                   # Glassmorphism system (.glass-panel, .glass-card, .glass-pill)
+│   │
+│   ├── constants/                  # Centralized theme tokens and color mappings
+│   │   └── theme.js                # Shared category icons, color schemes & style maps
 │   │
 │   ├── data/                       # Raw source mock datasets
 │   │   ├── spotify.json            # Track listens, artists, duration, timestamp, device
@@ -180,22 +192,33 @@ FrontendArena/
 │   │   └── chapters.js             # Chronological life phase / narrative era generator
 │   │
 │   ├── pages/                      # Top-level view controllers
-│   │   ├── Home.jsx                # Landing view with hero, KPI metrics, preview canvas & insights
-│   │   ├── Explore.jsx             # Grid & list view of all receipts with category filters & search
+│   │   ├── Home.jsx                # Decomposed landing view calling modular home sections
+│   │   ├── Explore.jsx             # Grid & spool view with GSAP cascade stagger & filters
 │   │   ├── Connections.jsx         # Interactive React Flow node-link relationship graph
 │   │   └── Chapters.jsx            # Narrative timeline of life eras and highlighted moments
 │   │
 │   └── components/                 # Modular, reusable UI components
-│       ├── Navbar.jsx              # Global navigation bar with view switching & metrics ticker
-│       ├── ReceiptCard.jsx         # Card component representing an individual receipt item
-│       ├── ReceiptDetailModal.jsx  # Detailed inspection modal displaying metadata & linked bonds
-│       ├── MomentStoryModal.jsx    # Immersive story view for multi-event synchronized moments
-│       ├── ChapterCard.jsx         # Visual summary card for a chronological life chapter
-│       ├── InsightCard.jsx         # Visual card displaying auto-generated behavioral statistics
-│       ├── LifeConstellation.jsx   # Custom 2D canvas plotting receipts and radiant connection lines
+│       ├── home/                   # Sub-components decomposed from Home view
+│       │   ├── HeroSection.jsx     # Hero with GSAP entrance timeline & magnetic CTA button
+│       │   ├── DashboardMockup.jsx # Interactive mockup with 3D constellation & spec tabs
+│       │   ├── PatternDiscoveries.jsx # Grid of empirical data behavioral insights
+│       │   └── FeaturedMoments.jsx # Spotlight-illuminated synchronized moment cards
+│       │
+│       ├── ThreeConstellation.jsx  # WebGL 3D constellation engine with raycasting hover
+│       ├── LifeConstellation.jsx   # 2D ambient constellation canvas fallback
 │       ├── ConnectionGraph.jsx     # Node-link graph canvas using @xyflow/react
-│       ├── FilterBar.jsx           # Search input and category filter chips
-│       └── StatsCard.jsx           # Metric display card with trends and badge indicators
+│       ├── StatsCard.jsx           # KPI card with GSAP animated numerical counter roll-up
+│       ├── ReceiptCard.jsx         # Tactile card with cursor spotlight glow & 3D tilt
+│       ├── ChapterCard.jsx         # Visual summary card for a chronological life chapter
+│       ├── InsightCard.jsx         # Visual card displaying behavioral statistics
+│       ├── FilterBar.jsx           # Glassmorphic search input and category filter chips
+│       ├── Navbar.jsx              # Frosted glass navigation bar with dropdown menus
+│       ├── ReceiptDetailModal.jsx  # Detailed glass inspection modal with linked records
+│       ├── MomentStoryModal.jsx    # Immersive step-by-step story view with confetti
+│       ├── LoadingSkeleton.jsx     # Animated scanner beam loading skeleton
+│       ├── ErrorState.jsx          # GSAP-animated error state with retry handler
+│       ├── PageTransition.jsx      # Smooth page transition wrapper
+│       └── ScrollProgress.jsx      # Viewport scroll depth indicator with luminous gradient
 ```
 
 ---
@@ -288,10 +311,10 @@ Upload or link the repository to Netlify with the publish directory set to `dist
 
 ## ⚡ Performance
 
+- **WebGL & Canvas Acceleration**: 3D particle nodes and constellation links run on Three.js hardware acceleration with requestAnimationFrame loops, bypassing DOM re-render overhead.
 - **Precomputed Memoization**: Computationally intensive operations (scoring connections, era clustering) are wrapped in `useMemo` hooks, preventing redundant $O(N^2)$ recalculations across page renders.
-- **Canvas Acceleration**: Radiant network graphs and constellation links utilize optimized 2D/3D canvas rendering rather than thousands of heavy DOM nodes.
-- **Fast Bundle Size**: Bundled using Vite 6 with aggressive tree-shaking and modern ES modules.
-- **Zero Heavy Runtime Overheads**: Built with native React hooks without unnecessary third-party global state managers.
+- **GSAP Hardware-Accelerated Transforms**: All hover tilts, magnetic springs, and spotlight gradients animate on `transform` and `opacity` properties to ensure 60fps GPU acceleration.
+- **Fast Bundle Size**: Bundled using Vite 6 with tree-shaking and modern ES modules.
 
 ---
 
@@ -301,13 +324,14 @@ Upload or link the repository to Netlify with the publish directory set to `dist
 - **High-Contrast Dark Mode**: Designed using WCAG AA compliant text-to-background contrast ratios against dark surfaces (`#08090a` / `#121316`).
 - **Keyboard Navigation**: Interactive elements, filter chips, and modals include distinct visual focus indicators and keyboard dismissal support (`Escape` to close modals).
 - **Responsive Layout**: Fluid grids that adapt gracefully from small mobile screens (320px) up to ultra-wide desktop monitors with minimum 44px touch targets.
+- **Reduced Motion Support**: Animations respect reduced motion preferences where supported.
 
 ---
 
 ## 🔮 Future Improvements
 
 - [ ] **Live OAuth Integrations**: Real-time webhook ingestion from Spotify Web API, Plaid/Tink bank feeds, and Google Maps Timeline.
-- [ ] **3D WebGL Galaxy Visualization**: A fully interactive 3D particle universe using Three.js / React Three Fiber with orbital zoom and depth-of-field effects.
+- [ ] **Interactive 3D Galaxy Shader**: Custom WebGL GLSL shaders for volumetric stellar dust and gravitational node orbits.
 - [ ] **Local LLM Narrative Generation**: In-browser biography generation with WebLLM/Transformers.js summarizing chapters into literary memoirs.
 - [ ] **Data Export & Privacy Vault**: End-to-end encrypted backup export to Obsidian Markdown vaults and encrypted JSON archives.
 
@@ -323,9 +347,9 @@ Upload or link the repository to Netlify with the publish directory set to `dist
 - **Challenge**: Pairwise relationship calculation between every receipt pair scales quadratically ($O(N^2)$), causing frame drops when computing tens of thousands of links.
 - **Solution**: Introduced temporal pre-filtering windows, bucketing records within calendar windows before applying granular multi-factor scoring (location, tag matching, cross-domain affinities).
 
-### 3. Visual Clutter in Dense Graphs
-- **Challenge**: Complex inter-connected graphs quickly become unreadable "hairballs" of overlapping edges.
-- **Solution**: Implemented tiered relationship filtering (strong vs. possible vs. same-day) and interactive node highlighting that dims unrelated edges upon hovering or selecting a node.
+### 3. High-Performance 3D Interaction
+- **Challenge**: Rendering hundreds of data points with dynamic raycasting hover selection can bog down React render cycles.
+- **Solution**: Decoupled the Three.js render loop into `ThreeConstellation.jsx`, caching meshes and using GPU raycasters with fallback 2D canvas states for low-power devices.
 
 ---
 
@@ -335,8 +359,9 @@ Upload or link the repository to Netlify with the publish directory set to `dist
 - **Repository**: [FrontendArena](https://github.com/akashkumar6205/FrontendArena)
 - **Special Thanks & Open Source Tools**:
   - [React](https://react.dev/) & [Vite](https://vite.dev/)
+  - [Three.js](https://threejs.org/)
+  - [GreenSock GSAP](https://greensock.com/gsap/)
   - [Tailwind CSS](https://tailwindcss.com/)
   - [@xyflow/react](https://reactflow.dev/)
   - [Framer Motion](https://www.framer.com/motion/)
-  - [Three.js](https://threejs.org/)
   - [Lucide Icons](https://lucide.dev/)
