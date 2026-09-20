@@ -1,13 +1,20 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useRef, useEffect } from 'react'
+import gsap from 'gsap'
 import { FilterBar } from '../components/FilterBar'
 import { ReceiptCard } from '../components/ReceiptCard'
-import { Layers, Sparkles, LayoutGrid, ScrollText } from 'lucide-react'
+import { LoadingSkeleton } from '../components/LoadingSkeleton'
+import { ErrorState } from '../components/ErrorState'
+import { Layers, LayoutGrid, ScrollText, SearchX, RotateCcw } from 'lucide-react'
 
-export function Explore({ receipts, connections, onSelectReceipt, onOpenMoment }) {
+export function Explore({ receipts = [], connections = [], onSelectReceipt, onOpenMoment }) {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [sortBy, setSortBy] = useState('newest')
   const [viewMode, setViewMode] = useState('grid') // 'grid' | 'spool'
+  const [isSearching, setIsSearching] = useState(false)
+
+  const emptyStateRef = useRef(null)
+  const emptyIconRef = useRef(null)
 
   // Extract categories present strictly in the dataset
   const categories = useMemo(() => {
@@ -24,6 +31,15 @@ export function Explore({ receipts, connections, onSelectReceipt, onOpenMoment }
     })
     return counts
   }, [connections])
+
+  // Simulated brief loading animation when category changes
+  const handleCategoryChange = (category) => {
+    setIsSearching(true)
+    setSelectedCategory(category)
+    setTimeout(() => {
+      setIsSearching(false)
+    }, 280)
+  }
 
   // Filter and sort receipts
   const filteredReceipts = useMemo(() => {
@@ -59,9 +75,46 @@ export function Explore({ receipts, connections, onSelectReceipt, onOpenMoment }
   }, [receipts, searchQuery, selectedCategory, sortBy, connectionCounts])
 
   const handleReset = () => {
+    setIsSearching(true)
     setSearchQuery('')
     setSelectedCategory('all')
     setSortBy('newest')
+    setTimeout(() => {
+      setIsSearching(false)
+    }, 250)
+  }
+
+  // GSAP animation for empty state
+  useEffect(() => {
+    if (filteredReceipts.length === 0 && emptyStateRef.current) {
+      gsap.fromTo(
+        emptyStateRef.current,
+        { opacity: 0, scale: 0.95, y: 20 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.45, ease: 'back.out(1.5)' }
+      )
+    }
+
+    if (emptyIconRef.current) {
+      gsap.to(emptyIconRef.current, {
+        y: -8,
+        duration: 1.5,
+        repeat: -1,
+        yoyo: true,
+        ease: 'power1.inOut'
+      })
+    }
+  }, [filteredReceipts.length])
+
+  if (!receipts || receipts.length === 0) {
+    return (
+      <div className="py-16">
+        <ErrorState
+          title="No Receipts Loaded"
+          message="The receipts dataset is empty or could not be loaded from memory."
+          onRetry={handleReset}
+        />
+      </div>
+    )
   }
 
   return (
@@ -78,7 +131,7 @@ export function Explore({ receipts, connections, onSelectReceipt, onOpenMoment }
             Explore Your Receipts
           </h1>
           <p className="text-xs text-gray-400 mt-1">
-            Browse through individual music streams, transactions, places, expenses, and notes.
+            Browse through individual music streams, transactions, places, expenses, and notes with tactile 3D hover feedback.
           </p>
         </div>
 
@@ -114,7 +167,7 @@ export function Explore({ receipts, connections, onSelectReceipt, onOpenMoment }
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
+        setSelectedCategory={handleCategoryChange}
         categories={categories}
         sortBy={sortBy}
         setSortBy={setSortBy}
@@ -133,65 +186,79 @@ export function Explore({ receipts, connections, onSelectReceipt, onOpenMoment }
         )}
       </div>
 
-      {/* Receipts Grid / Tape View */}
-      {filteredReceipts.length > 0 ? (
-        viewMode === 'grid' ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredReceipts.map((receipt) => (
-              <ReceiptCard
-                key={receipt.id}
-                receipt={receipt}
-                connectionCount={connectionCounts[receipt.id] || 0}
-                onClick={onSelectReceipt}
-                onSelectMoment={() => {
-                  onSelectReceipt(receipt)
-                }}
-              />
-            ))}
-          </div>
-        ) : (
-          /* Continuous Tape Spool View */
-          <div className="max-w-xl mx-auto space-y-4 bg-dark-paper border border-dark-border p-6 rounded-3xl shadow-2xl relative">
-            <div className="text-center pb-4 border-b border-dashed border-dark-border">
-              <span className="font-receipt font-bold text-white text-lg block">
-                🧾 DIGITAL RECEIPT SPOOL
-              </span>
-              <span className="text-[10px] font-mono text-gray-400">
-                CHRONOLOGICAL RECORD LOG
-              </span>
-            </div>
-
-            <div className="space-y-4">
+      {/* Loading State Skeleton */}
+      {isSearching ? (
+        <LoadingSkeleton count={6} />
+      ) : (
+        /* Receipts Grid / Tape View */
+        filteredReceipts.length > 0 ? (
+          viewMode === 'grid' ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredReceipts.map((receipt) => (
                 <ReceiptCard
                   key={receipt.id}
                   receipt={receipt}
                   connectionCount={connectionCounts[receipt.id] || 0}
                   onClick={onSelectReceipt}
+                  onSelectMoment={() => {
+                    onSelectReceipt(receipt)
+                  }}
                 />
               ))}
             </div>
+          ) : (
+            /* Continuous Tape Spool View */
+            <div className="max-w-xl mx-auto space-y-4 bg-dark-paper border border-dark-border p-6 rounded-3xl shadow-2xl relative">
+              <div className="text-center pb-4 border-b border-dashed border-dark-border">
+                <span className="font-receipt font-bold text-white text-lg block">
+                  🧾 DIGITAL RECEIPT SPOOL
+                </span>
+                <span className="text-[10px] font-mono text-gray-400">
+                  CHRONOLOGICAL RECORD LOG
+                </span>
+              </div>
+
+              <div className="space-y-4">
+                {filteredReceipts.map((receipt) => (
+                  <ReceiptCard
+                    key={receipt.id}
+                    receipt={receipt}
+                    connectionCount={connectionCounts[receipt.id] || 0}
+                    onClick={onSelectReceipt}
+                  />
+                ))}
+              </div>
+            </div>
+          )
+        ) : (
+          /* Rich GSAP-Animated Empty State */
+          <div 
+            ref={emptyStateRef}
+            className="text-center py-16 p-8 bg-dark-card border border-dark-border rounded-3xl space-y-5 max-w-lg mx-auto shadow-2xl backdrop-blur-md"
+          >
+            <div 
+              ref={emptyIconRef}
+              className="w-16 h-16 rounded-2xl bg-[#15171c] border border-dark-border text-emerald-400 flex items-center justify-center mx-auto shadow-glow-emerald/30"
+            >
+              <SearchX className="w-8 h-8" />
+            </div>
+            <div>
+              <h3 className="text-xl font-sans font-bold text-white">
+                No Matching Receipts Found
+              </h3>
+              <p className="text-xs text-gray-400 max-w-sm mx-auto mt-1 leading-relaxed">
+                We couldn't find any receipt records matching <span className="text-emerald-400 font-mono">"{searchQuery || selectedCategory}"</span>. Try adjusting your search query or reset filters.
+              </p>
+            </div>
+            <button
+              onClick={handleReset}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black text-xs font-bold uppercase transition-all shadow-lg active:scale-95"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Clear All Filters</span>
+            </button>
           </div>
         )
-      ) : (
-        /* Empty State */
-        <div className="text-center py-16 p-8 bg-dark-card border border-dark-border rounded-3xl space-y-4">
-          <div className="w-14 h-14 rounded-2xl bg-dark-bg border border-dark-border text-gray-400 flex items-center justify-center mx-auto text-2xl">
-            🔍
-          </div>
-          <h3 className="text-xl font-receipt font-bold text-white">
-            No Receipts Found
-          </h3>
-          <p className="text-xs text-gray-400 max-w-sm mx-auto">
-            No receipt records match your current search query or category filter. Try clearing filters to see more.
-          </p>
-          <button
-            onClick={handleReset}
-            className="px-4 py-2 rounded-xl bg-emerald-500 text-black text-xs font-bold uppercase"
-          >
-            Clear All Filters
-          </button>
-        </div>
       )}
     </div>
   )

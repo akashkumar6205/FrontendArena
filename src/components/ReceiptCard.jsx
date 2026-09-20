@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useRef } from 'react'
+import gsap from 'gsap'
 import { Music, CreditCard, Receipt, MapPin, FileText, GitMerge, ArrowRight, Clock, Calendar } from 'lucide-react'
 
 const ICON_MAP = {
@@ -48,13 +49,62 @@ const COLOR_THEMES = {
 }
 
 export function ReceiptCard({ receipt, connectionCount = 0, onClick, onSelectMoment }) {
+  const cardRef = useRef(null)
   const IconComponent = ICON_MAP[receipt.type] || FileText
   const theme = COLOR_THEMES[receipt.type] || COLOR_THEMES.note
 
+  // GSAP 3D Card Tilt on Mouse Move
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left - rect.width / 2
+    const y = e.clientY - rect.top - rect.height / 2
+    
+    // Calculate tilt angles
+    const rotateX = -(y / rect.height) * 12
+    const rotateY = (x / rect.width) * 12
+
+    gsap.to(cardRef.current, {
+      rotateX,
+      rotateY,
+      scale: 1.02,
+      duration: 0.25,
+      ease: 'power1.out',
+      transformPerspective: 800
+    })
+  }
+
+  // Restore Card on Mouse Leave
+  const handleMouseLeave = () => {
+    if (!cardRef.current) return
+    gsap.to(cardRef.current, {
+      rotateX: 0,
+      rotateY: 0,
+      scale: 1,
+      duration: 0.4,
+      ease: 'power2.out'
+    })
+  }
+
+  // GSAP Click Punch Animation
+  const handleClick = (e) => {
+    if (cardRef.current) {
+      gsap.fromTo(
+        cardRef.current,
+        { scale: 0.96 },
+        { scale: 1, duration: 0.25, ease: 'back.out(2)' }
+      )
+    }
+    if (onClick) onClick(receipt)
+  }
+
   return (
     <div 
-      onClick={() => onClick && onClick(receipt)}
-      className={`group relative bg-gradient-to-b ${theme.bg} border ${theme.border} rounded-2xl p-5 cursor-pointer transition-all duration-300 hover:-translate-y-1 ${theme.glow} flex flex-col justify-between`}
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
+      className={`group relative bg-gradient-to-b ${theme.bg} border ${theme.border} rounded-2xl p-5 cursor-pointer will-change-transform ${theme.glow} flex flex-col justify-between shadow-xl`}
     >
       {/* Receipt Top Header */}
       <div>

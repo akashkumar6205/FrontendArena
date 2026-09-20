@@ -26,7 +26,17 @@ export function Home({ receipts, connections, moments, insights, onNavigate, onS
   const [activeMockupTab, setActiveMockupTab] = useState('canvas')
   const [selectedVault, setSelectedVault] = useState('Personal Vault')
   const [vaultDropdownOpen, setVaultDropdownOpen] = useState(false)
+  const [isVaultLoading, setIsVaultLoading] = useState(false)
   const [copiedCode, setCopiedCode] = useState(false)
+
+  const handleVaultChange = (vault) => {
+    setSelectedVault(vault)
+    setVaultDropdownOpen(false)
+    setIsVaultLoading(true)
+    setTimeout(() => {
+      setIsVaultLoading(false)
+    }, 450)
+  }
 
   // Metrics styled in the exact ui.png 4-card format using the project's real data
   const dashboardStats = [
@@ -141,7 +151,7 @@ export function Home({ receipts, connections, moments, insights, onNavigate, onS
                     {['Personal Vault', 'All Receipts Archive', 'Travel & Coffee Runs', 'Financial Highlights'].map((vault) => (
                       <button
                         key={vault}
-                        onClick={() => { setSelectedVault(vault); setVaultDropdownOpen(false); }}
+                        onClick={() => handleVaultChange(vault)}
                         className={`w-full text-left px-2.5 py-1.5 rounded-lg transition-colors ${
                           selectedVault === vault ? 'bg-zinc-800 text-white font-semibold' : 'text-zinc-400 hover:text-white hover:bg-zinc-800/50'
                         }`}
@@ -199,8 +209,18 @@ export function Home({ receipts, connections, moments, insights, onNavigate, onS
           </div>
 
           {/* Interactive Mockup Content Area / Tabs */}
-          <div className="bg-[#090a0d] border border-[#23252a] rounded-xl p-4 sm:p-5">
+          <div className="bg-[#090a0d] border border-[#23252a] rounded-xl p-4 sm:p-5 relative min-h-[300px]">
             
+            {/* Vault Loading Overlay */}
+            {isVaultLoading && (
+              <div className="absolute inset-0 z-40 bg-[#090a0d]/90 backdrop-blur-sm rounded-xl flex flex-col items-center justify-center space-y-3">
+                <div className="w-9 h-9 rounded-full border-2 border-emerald-500/30 border-t-emerald-400 animate-spin" />
+                <span className="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider">
+                  Hydrating {selectedVault}...
+                </span>
+              </div>
+            )}
+
             {/* Tab controls */}
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#23252a] pb-3 mb-4">
               <div className="flex items-center gap-1.5 bg-[#15171c] p-1 rounded-lg border border-[#272930]">
@@ -248,9 +268,15 @@ export function Home({ receipts, connections, moments, insights, onNavigate, onS
             {activeMockupTab === 'canvas' && (
               <div className="space-y-2">
                 <LifeConstellation 
-                  onSelectReceipt={(id) => {
-                    const found = receipts.find(r => r.id === id)
-                    if (found) onSelectReceipt(found)
+                  receipts={receipts}
+                  connections={connections}
+                  onSelectReceipt={(receipt) => {
+                    if (typeof receipt === 'string') {
+                      const found = receipts.find(r => r.id === receipt)
+                      if (found) onSelectReceipt(found)
+                    } else if (receipt) {
+                      onSelectReceipt(receipt)
+                    }
                   }}
                   onOpenGraph={() => onNavigate('connections')}
                 />

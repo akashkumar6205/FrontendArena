@@ -6,6 +6,7 @@ import { Connections } from './pages/Connections'
 import { Chapters } from './pages/Chapters'
 import { ReceiptDetailModal } from './components/ReceiptDetailModal'
 import { MomentStoryModal } from './components/MomentStoryModal'
+import { PageTransition } from './components/PageTransition'
 import { getNormalizedReceipts } from './utils/normalizeData'
 import { getAllConnections, getLifeMoments } from './utils/connections'
 import { generateInsights } from './utils/insights'
@@ -42,41 +43,43 @@ export default function App() {
 
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        {activePage === 'home' && (
-          <Home
-            receipts={receipts}
-            connections={connections}
-            moments={moments}
-            insights={insights}
-            onNavigate={setActivePage}
-            onSelectReceipt={setSelectedReceipt}
-            onOpenMoment={setSelectedMoment}
-          />
-        )}
+        <PageTransition activeKey={activePage}>
+          {activePage === 'home' && (
+            <Home
+              receipts={receipts}
+              connections={connections}
+              moments={moments}
+              insights={insights}
+              onNavigate={setActivePage}
+              onSelectReceipt={setSelectedReceipt}
+              onOpenMoment={setSelectedMoment}
+            />
+          )}
 
-        {activePage === 'explore' && (
-          <Explore
-            receipts={receipts}
-            connections={connections}
-            onSelectReceipt={setSelectedReceipt}
-            onOpenMoment={setSelectedMoment}
-          />
-        )}
+          {activePage === 'explore' && (
+            <Explore
+              receipts={receipts}
+              connections={connections}
+              onSelectReceipt={setSelectedReceipt}
+              onOpenMoment={setSelectedMoment}
+            />
+          )}
 
-        {activePage === 'connections' && (
-          <Connections
-            receipts={receipts}
-            connections={connections}
-            onSelectReceipt={setSelectedReceipt}
-          />
-        )}
+          {activePage === 'connections' && (
+            <Connections
+              receipts={receipts}
+              connections={connections}
+              onSelectReceipt={setSelectedReceipt}
+            />
+          )}
 
-        {activePage === 'chapters' && (
-          <Chapters
-            chapters={chapters}
-            onOpenMoment={setSelectedMoment}
-          />
-        )}
+          {activePage === 'chapters' && (
+            <Chapters
+              chapters={chapters}
+              onOpenMoment={setSelectedMoment}
+            />
+          )}
+        </PageTransition>
       </main>
 
       {/* Modal Views */}

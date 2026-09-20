@@ -1,5 +1,5 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import React, { useRef } from 'react'
+import gsap from 'gsap'
 import { Receipt, GitMerge, Sparkles, Layers } from 'lucide-react'
 
 const ICON_MAP = {
@@ -17,31 +17,51 @@ const COLOR_MAP = {
 }
 
 export function StatsCard({ label, value, subtext, type = 'receipts', color = 'emerald' }) {
+  const cardRef = useRef(null)
   const IconComponent = ICON_MAP[type] || Receipt
   const colorStyles = COLOR_MAP[color] || COLOR_MAP.emerald
 
+  const handleMouseEnter = () => {
+    if (!cardRef.current) return
+    gsap.to(cardRef.current, {
+      scale: 1.025,
+      y: -2,
+      duration: 0.25,
+      ease: 'power2.out'
+    })
+  }
+
+  const handleMouseLeave = () => {
+    if (!cardRef.current) return
+    gsap.to(cardRef.current, {
+      scale: 1,
+      y: 0,
+      duration: 0.35,
+      ease: 'power2.out'
+    })
+  }
+
   return (
-    <div className="bg-dark-card border border-dark-border rounded-2xl p-5 shadow-xl relative overflow-hidden group hover:border-emerald-500/40 transition-all">
+    <div 
+      ref={cardRef}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="bg-[#111215] border border-[#23252a] rounded-2xl p-5 shadow-xl relative overflow-hidden group hover:border-emerald-500/40 transition-colors cursor-pointer"
+    >
       <div className="flex items-center justify-between mb-3">
-        <span className="text-[11px] font-mono uppercase tracking-widest text-gray-400 font-semibold">
+        <span className="text-[11px] font-mono uppercase tracking-widest text-zinc-400 font-semibold">
           {label}
         </span>
-        <div className={`p-2 rounded-xl border ${colorStyles}`}>
+        <div className={`p-2 rounded-xl border ${colorStyles} transition-transform group-hover:scale-110`}>
           <IconComponent className="w-4 h-4" />
         </div>
       </div>
 
-      <div className="font-receipt font-bold text-3xl sm:text-4xl text-white tracking-tight group-hover:text-emerald-300 transition-colors">
-        <motion.span
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          {value}
-        </motion.span>
+      <div className="font-sans font-bold text-2xl sm:text-3xl text-white tracking-tight group-hover:text-emerald-300 transition-colors">
+        {value}
       </div>
 
-      <div className="text-xs text-gray-400 mt-1 font-mono">
+      <div className="text-xs text-zinc-400 mt-1 font-mono">
         {subtext}
       </div>
     </div>
