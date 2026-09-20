@@ -1,11 +1,12 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import gsap from 'gsap'
 import { FileText, GitMerge, ArrowRight, Clock, Calendar } from 'lucide-react'
 import { ICON_MAP, COLOR_THEMES } from '../constants/theme'
 
 /**
  * ReceiptCard component representing a single normalized receipt item.
- * Features GSAP 3D perspective tilt on hover and a tactile scale punch on click.
+ * Features glassmorphism, dynamic cursor spotlight highlight, GSAP 3D perspective tilt,
+ * and a tactile scale punch on click.
  *
  * @param {Object} props
  * @param {Object} props.receipt - The normalized receipt object
@@ -15,19 +16,25 @@ import { ICON_MAP, COLOR_THEMES } from '../constants/theme'
  */
 export function ReceiptCard({ receipt, connectionCount = 0, onClick, onSelectMoment }) {
   const cardRef = useRef(null)
+  const [spotlightPos, setSpotlightPos] = useState({ x: 0, y: 0 })
   const IconComponent = ICON_MAP[receipt.type] || FileText
   const theme = COLOR_THEMES[receipt.type] || COLOR_THEMES.note
 
-  // GSAP 3D Card Tilt on Mouse Move
+  // GSAP 3D Card Tilt & Spotlight on Mouse Move
   const handleMouseMove = (e) => {
     if (!cardRef.current) return
     const rect = cardRef.current.getBoundingClientRect()
-    const x = e.clientX - rect.left - rect.width / 2
-    const y = e.clientY - rect.top - rect.height / 2
+    const offsetX = e.clientX - rect.left
+    const offsetY = e.clientY - rect.top
+    
+    setSpotlightPos({ x: offsetX, y: offsetY })
+
+    const centerX = offsetX - rect.width / 2
+    const centerY = offsetY - rect.height / 2
     
     // Calculate tilt angles based on cursor offset from card center
-    const rotateX = -(y / rect.height) * 12
-    const rotateY = (x / rect.width) * 12
+    const rotateX = -(centerY / rect.height) * 12
+    const rotateY = (centerX / rect.width) * 12
 
     gsap.to(cardRef.current, {
       rotateX,
@@ -69,13 +76,21 @@ export function ReceiptCard({ receipt, connectionCount = 0, onClick, onSelectMom
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
-      className={`group relative bg-gradient-to-b ${theme.bg} border ${theme.border} rounded-2xl p-5 cursor-pointer will-change-transform ${theme.glow} flex flex-col justify-between shadow-xl`}
+      className={`glass-card group relative rounded-2xl p-5 cursor-pointer will-change-transform flex flex-col justify-between shadow-xl overflow-hidden transition-all duration-300 hover:border-emerald-500/40`}
     >
+      {/* Dynamic Cursor Spotlight Highlight */}
+      <div 
+        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(300px circle at ${spotlightPos.x}px ${spotlightPos.y}px, rgba(16, 185, 129, 0.14), transparent 75%)`
+        }}
+      />
+
       {/* Receipt Top Header */}
-      <div>
-        <div className="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-dark-border/80">
+      <div className="relative z-10">
+        <div className="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-white/10">
           <div className="flex items-center gap-2">
-            <span className={`p-1.5 rounded-lg bg-dark-bg/80 border ${theme.border} ${theme.accent}`}>
+            <span className={`p-1.5 rounded-lg bg-black/40 border border-white/10 ${theme.accent}`}>
               <IconComponent className="w-4 h-4" />
             </span>
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-gray-300">
@@ -97,7 +112,7 @@ export function ReceiptCard({ receipt, connectionCount = 0, onClick, onSelectMom
         </p>
 
         {/* Metadata section (Amount or Details) */}
-        <div className="mt-4 pt-3 border-t border-dashed border-dark-border flex items-center justify-between">
+        <div className="mt-4 pt-3 border-t border-dashed border-white/10 flex items-center justify-between">
           <div className="flex items-center gap-1.5 text-[11px] font-mono text-gray-400">
             <Calendar className="w-3 h-3 text-gray-400" />
             {receipt.date}
@@ -112,7 +127,7 @@ export function ReceiptCard({ receipt, connectionCount = 0, onClick, onSelectMom
       </div>
 
       {/* Connected indicator & Footer action */}
-      <div className="mt-4 pt-3 border-t border-dark-border/60 flex items-center justify-between">
+      <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between relative z-10">
         {connectionCount > 0 ? (
           <span className={`text-[11px] font-mono px-2 py-0.5 rounded-full border flex items-center gap-1.5 ${theme.badge}`}>
             <GitMerge className="w-3 h-3" />
@@ -141,7 +156,7 @@ export function ReceiptCard({ receipt, connectionCount = 0, onClick, onSelectMom
       </div>
 
       {/* Decorative receipt barcode at bottom */}
-      <div className="mt-3 pt-2 border-t border-dashed border-dark-border/40 flex justify-between items-center opacity-30 group-hover:opacity-70 transition-opacity">
+      <div className="mt-3 pt-2 border-t border-dashed border-white/10 flex justify-between items-center opacity-30 group-hover:opacity-75 transition-opacity relative z-10">
         <div className="h-3 w-full bg-[repeating-linear-gradient(90deg,#9ca3af,#9ca3af_2px,transparent_2px,transparent_4px)]" />
         <span className="text-[9px] font-mono text-gray-400 ml-2 uppercase">
           #{receipt.id}

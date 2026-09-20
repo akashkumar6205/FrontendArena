@@ -80,10 +80,10 @@ export function DashboardMockup({
         initial={{ opacity: 0, y: 35 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.25 }}
-        className="rounded-2xl border border-[#23252a] bg-[#0c0d10]/95 p-3 sm:p-5 shadow-2xl backdrop-blur-xl text-left relative z-10"
+        className="rounded-3xl glass-panel p-4 sm:p-6 shadow-2xl text-left relative z-10"
       >
         {/* Top Control Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-[#23252a]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 mb-4 border-b border-white/10">
           {/* Left Controls */}
           <div className="flex items-center gap-2.5">
             {/* Vault Dropdown */}
@@ -160,10 +160,10 @@ export function DashboardMockup({
         </div>
 
         {/* Interactive Tabs Content */}
-        <div className="bg-[#090a0d] border border-[#23252a] rounded-xl p-4 sm:p-5 relative min-h-[300px]">
+        <div className="glass-card rounded-2xl p-4 sm:p-5 relative min-h-[300px]">
           {/* Vault Loading Overlay */}
           {isVaultLoading && (
-            <div className="absolute inset-0 z-40 bg-[#090a0d]/90 backdrop-blur-sm rounded-xl flex flex-col items-center justify-center space-y-3">
+            <div className="absolute inset-0 z-40 bg-[#090a0d]/90 backdrop-blur-md rounded-2xl flex flex-col items-center justify-center space-y-3">
               <div className="w-9 h-9 rounded-full border-2 border-emerald-500/30 border-t-emerald-400 animate-spin" />
               <span className="text-xs font-mono text-emerald-400 font-bold uppercase tracking-wider">
                 Hydrating {selectedVault}...
@@ -172,8 +172,8 @@ export function DashboardMockup({
           )}
 
           {/* Tab Selector Controls */}
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#23252a] pb-3 mb-4">
-            <div className="flex items-center gap-1.5 bg-[#15171c] p-1 rounded-lg border border-[#272930]">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3 mb-4">
+            <div className="flex items-center gap-1.5 glass-pill p-1 rounded-xl">
               <button
                 onClick={() => setActiveMockupTab('canvas')}
                 className={`px-3 py-1 rounded-md text-xs font-medium transition-colors flex items-center gap-1.5 ${

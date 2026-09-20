@@ -7,6 +7,7 @@ import { Chapters } from './pages/Chapters'
 import { ReceiptDetailModal } from './components/ReceiptDetailModal'
 import { MomentStoryModal } from './components/MomentStoryModal'
 import { PageTransition } from './components/PageTransition'
+import { ScrollProgress } from './components/ScrollProgress'
 import { getNormalizedReceipts } from './utils/normalizeData'
 import { getAllConnections, getLifeMoments } from './utils/connections'
 import { generateInsights } from './utils/insights'
@@ -38,7 +39,9 @@ export default function App() {
   }), [receipts, connections, moments, chapters])
 
   return (
-    <div className="min-h-screen bg-dark-bg text-gray-100 flex flex-col justify-between font-sans selection:bg-emerald-500 selection:text-black">
+    <div className="min-h-screen bg-dark-bg text-gray-100 flex flex-col justify-between font-sans selection:bg-emerald-500 selection:text-black relative">
+      {/* Scroll Progress Bar pinned to top of viewport */}
+      <ScrollProgress />
       
       {/* Global Navigation Bar */}
       <Navbar

@@ -9,27 +9,31 @@ const ICON_MAP = {
 }
 
 const COLOR_MAP = {
-  indigo: 'from-indigo-950/20 via-[#111215] to-[#111215] border-[#23252a] hover:border-indigo-500/40 text-indigo-400',
-  emerald: 'from-emerald-950/20 via-[#111215] to-[#111215] border-[#23252a] hover:border-emerald-500/40 text-emerald-400',
-  amber: 'from-amber-950/25 via-[#111215] to-[#111215] border-[#23252a] hover:border-amber-500/40 text-amber-400',
-  cyan: 'from-cyan-950/20 via-[#111215] to-[#111215] border-[#23252a] hover:border-cyan-500/40 text-cyan-400'
+  indigo: 'from-indigo-950/30 via-[#111215]/80 to-[#111215]/80 border-indigo-500/30 hover:border-indigo-500/60 text-indigo-400 hover:shadow-glow-violet/25',
+  emerald: 'from-emerald-950/30 via-[#111215]/80 to-[#111215]/80 border-emerald-500/30 hover:border-emerald-500/60 text-emerald-400 hover:shadow-glow-emerald/25',
+  amber: 'from-amber-950/35 via-[#111215]/80 to-[#111215]/80 border-amber-500/30 hover:border-amber-500/60 text-amber-400 hover:shadow-glow-amber/25',
+  cyan: 'from-cyan-950/30 via-[#111215]/80 to-[#111215]/80 border-cyan-500/30 hover:border-cyan-500/60 text-cyan-400 hover:shadow-glow-cyan/25'
 }
 
+/**
+ * InsightCard component rendering an empirical behavioral pattern
+ * with glassmorphism, accent glow, and hover micro-interactions.
+ */
 export function InsightCard({ insight }) {
   const IconComponent = ICON_MAP[insight.type] || Sparkles
   const colorStyles = COLOR_MAP[insight.accentColor] || COLOR_MAP.amber
 
   return (
-    <div className={`relative bg-gradient-to-br ${colorStyles} border rounded-2xl p-6 transition-all duration-300 flex flex-col justify-between shadow-xl group`}>
+    <div className={`glass-card relative bg-gradient-to-br ${colorStyles} border rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between shadow-xl group overflow-hidden`}>
       <div>
         <div className="flex items-center justify-between gap-2 mb-4">
-          <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-full bg-[#15171c] border border-[#272930] text-zinc-300 flex items-center gap-1.5">
+          <span className="text-xs font-mono font-medium px-2.5 py-1 rounded-full glass-pill text-zinc-300 flex items-center gap-1.5 shadow-sm">
             <IconComponent className="w-3.5 h-3.5 text-amber-400" />
             {insight.badge}
           </span>
 
           <div className="text-right">
-            <div className="font-sans font-bold text-xl text-white">
+            <div className="font-sans font-bold text-xl text-white group-hover:text-amber-300 transition-colors">
               {insight.stat}
             </div>
             <div className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider">
@@ -47,7 +51,7 @@ export function InsightCard({ insight }) {
         </p>
       </div>
 
-      <div className="mt-5 pt-3 border-t border-[#23252a] flex items-center justify-between text-[11px] text-zinc-500 font-mono">
+      <div className="mt-5 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-zinc-500 font-mono">
         <span className="flex items-center gap-1.5">
           <TrendingUp className="w-3.5 h-3.5 text-amber-400" />
           Empirical Data Discovery

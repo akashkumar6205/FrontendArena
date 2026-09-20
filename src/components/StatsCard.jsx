@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import gsap from 'gsap'
 import { Receipt, GitMerge, Sparkles, Layers } from 'lucide-react'
 
@@ -10,22 +10,36 @@ const ICON_MAP = {
 }
 
 const COLOR_MAP = {
-  emerald: 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10',
-  indigo: 'border-indigo-500/30 text-indigo-400 bg-indigo-500/10',
-  amber: 'border-amber-500/30 text-amber-400 bg-amber-500/10',
-  cyan: 'border-cyan-500/30 text-cyan-400 bg-cyan-500/10'
+  emerald: 'border-emerald-500/30 text-emerald-400 bg-emerald-500/10 shadow-glow-emerald/20',
+  indigo: 'border-indigo-500/30 text-indigo-400 bg-indigo-500/10 shadow-glow-violet/20',
+  amber: 'border-amber-500/30 text-amber-400 bg-amber-500/10 shadow-glow-amber/20',
+  cyan: 'border-cyan-500/30 text-cyan-400 bg-cyan-500/10 shadow-glow-cyan/20'
 }
 
+/**
+ * StatsCard renders a KPI metric with glassmorphism, spotlight illumination,
+ * and smooth GSAP elevation on hover.
+ */
 export function StatsCard({ label, value, subtext, type = 'receipts', color = 'emerald' }) {
   const cardRef = useRef(null)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const IconComponent = ICON_MAP[type] || Receipt
   const colorStyles = COLOR_MAP[color] || COLOR_MAP.emerald
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top
+    })
+  }
 
   const handleMouseEnter = () => {
     if (!cardRef.current) return
     gsap.to(cardRef.current, {
-      scale: 1.025,
-      y: -2,
+      scale: 1.03,
+      y: -3,
       duration: 0.25,
       ease: 'power2.out'
     })
@@ -44,24 +58,33 @@ export function StatsCard({ label, value, subtext, type = 'receipts', color = 'e
   return (
     <div 
       ref={cardRef}
+      onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="bg-[#111215] border border-[#23252a] rounded-2xl p-5 shadow-xl relative overflow-hidden group hover:border-emerald-500/40 transition-colors cursor-pointer"
+      className="glass-card rounded-2xl p-5 shadow-xl relative overflow-hidden group hover:border-emerald-500/40 transition-all cursor-pointer select-none"
     >
-      <div className="flex items-center justify-between mb-3">
+      {/* Spotlight Hover Glow */}
+      <div 
+        className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        style={{
+          background: `radial-gradient(220px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 255, 255, 0.08), transparent 75%)`
+        }}
+      />
+
+      <div className="flex items-center justify-between mb-3 relative z-10">
         <span className="text-[11px] font-mono uppercase tracking-widest text-zinc-400 font-semibold">
           {label}
         </span>
-        <div className={`p-2 rounded-xl border ${colorStyles} transition-transform group-hover:scale-110`}>
+        <div className={`p-2 rounded-xl border ${colorStyles} transition-transform group-hover:scale-110 shadow-sm`}>
           <IconComponent className="w-4 h-4" />
         </div>
       </div>
 
-      <div className="font-sans font-bold text-2xl sm:text-3xl text-white tracking-tight group-hover:text-emerald-300 transition-colors">
+      <div className="font-sans font-bold text-2xl sm:text-3xl text-white tracking-tight group-hover:text-emerald-300 transition-colors relative z-10">
         {value}
       </div>
 
-      <div className="text-xs text-zinc-400 mt-1 font-mono">
+      <div className="text-xs text-zinc-400 mt-1 font-mono relative z-10">
         {subtext}
       </div>
     </div>

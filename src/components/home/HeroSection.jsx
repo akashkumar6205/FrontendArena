@@ -1,10 +1,11 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, GitMerge } from 'lucide-react'
+import { ArrowRight, GitMerge, Sparkles } from 'lucide-react'
 
 /**
  * HeroSection component for the Home page.
- * Features specular top lighting, headline typography, and primary CTA buttons.
+ * Features specular top lighting, floating glassmorphic badges, headline typography,
+ * and tactile interactive action buttons.
  *
  * @param {Object} props
  * @param {Function} props.onNavigate - Page navigation callback
@@ -12,8 +13,23 @@ import { ArrowRight, GitMerge } from 'lucide-react'
 export function HeroSection({ onNavigate }) {
   return (
     <section className="relative pt-8 sm:pt-14 text-center max-w-6xl mx-auto px-4">
+      {/* Floating Ambient Glass Orbs */}
+      <div className="absolute top-10 left-1/4 -translate-x-1/2 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none animate-float-slow" />
+      <div className="absolute top-20 right-1/4 translate-x-1/2 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none animate-pulse-glow" />
+
       {/* Specular Top Lighting Reflection pill above Title */}
       <div className="mx-auto w-48 sm:w-96 h-10 bg-white/20 blur-2xl rounded-full mb-[-25px] pointer-events-none" />
+
+      {/* Floating Eyebrow Pill */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="inline-flex items-center gap-2 px-3 py-1 rounded-full glass-pill text-xs font-mono text-zinc-300 mb-6 shadow-sm"
+      >
+        <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+        <span>Contextual Life Intelligence Engine</span>
+      </motion.div>
 
       {/* Hero Title */}
       <motion.div
@@ -35,7 +51,7 @@ export function HeroSection({ onNavigate }) {
         </p>
       </motion.div>
 
-      {/* Hero Action Buttons */}
+      {/* Hero Action Buttons with Tactile Hover/Click */}
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
@@ -45,18 +61,18 @@ export function HeroSection({ onNavigate }) {
         {/* Primary CTA */}
         <button
           onClick={() => onNavigate('explore')}
-          className="px-6 py-2.5 rounded-lg bg-[#E5E7EB] hover:bg-white text-zinc-900 font-semibold text-sm transition-all shadow-md active:scale-95 flex items-center gap-2"
+          className="group relative px-6 py-2.5 rounded-xl bg-zinc-100 hover:bg-white text-zinc-900 font-semibold text-sm transition-all duration-300 shadow-lg hover:shadow-white/20 active:scale-95 flex items-center gap-2 overflow-hidden"
         >
           <span>Explore the Story</span>
-          <ArrowRight className="w-4 h-4" />
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </button>
 
         {/* Secondary CTA */}
         <button
           onClick={() => onNavigate('connections')}
-          className="px-5 py-2.5 rounded-lg bg-[#22242a]/80 hover:bg-[#2d3038] border border-zinc-700/60 text-zinc-100 font-medium text-sm transition-all flex items-center gap-2 shadow-sm"
+          className="group px-5 py-2.5 rounded-xl glass-pill hover:bg-white/10 text-zinc-100 font-medium text-sm transition-all duration-300 flex items-center gap-2 shadow-sm hover:border-emerald-500/40 active:scale-95"
         >
-          <GitMerge className="w-4 h-4 text-zinc-300" />
+          <GitMerge className="w-4 h-4 text-emerald-400 group-hover:rotate-12 transition-transform" />
           <span>Connect the Dots</span>
         </button>
       </motion.div>

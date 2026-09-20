@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 @layer utilities {
   /* Ambient glow and backdrop reflections */
   .bg-radial-amber {
@@ -10,6 +16,35 @@
 
   .text-glow-white {
     text-shadow: 0 0 35px rgba(255, 255, 255, 0.25);
+  }
+
+  /* Glassmorphism Panels & Cards */
+  .glass-panel {
+    background: rgba(12, 13, 16, 0.72);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .glass-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%), rgba(15, 16, 20, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-card:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+    box-shadow: 0 15px 35px -5px rgba(16, 185, 129, 0.15), inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+  }
+
+  .glass-pill {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   /* Specular top light effect on text */
@@ -30,10 +65,10 @@
     border-radius: 9999px;
   }
 
-  /* Custom scrollbar */
+  /* Custom Neon Scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
   }
 
   ::-webkit-scrollbar-track {
@@ -43,35 +78,68 @@
   ::-webkit-scrollbar-thumb {
     background: #23252a;
     border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #3f424b;
+    background: #10b981;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
   }
+}
+
+/* Animations */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(2deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
 }
 
 /* React Flow custom dark theme styling overrides */
 .react-flow__node {
-  border-radius: 12px;
+  border-radius: 14px;
   transition: all 0.2s ease-in-out;
 }
 
 .react-flow__controls {
-  background: #111726 !important;
-  border: 1px solid #1f293d !important;
-  border-radius: 8px !important;
+  background: rgba(17, 23, 38, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px !important;
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
 }
 
 .react-flow__controls-button {
-  background: #111726 !important;
-  border-bottom: 1px solid #1f293d !important;
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
   color: #9ca3af !important;
 }
 
 .react-flow__controls-button:hover {
-  background: #182033 !important;
-  color: #f3f4f6 !important;
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #10b981 !important;
 }
 
 .react-flow__edge-path {
