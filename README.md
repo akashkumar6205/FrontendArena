@@ -191,6 +191,9 @@ FrontendArena/
 │   │   ├── insights.js             # Automated statistical analysis & behavioral story generation
 │   │   └── chapters.js             # Chronological life phase / narrative era generator
 │   │
+│   ├── engine/                     # Standalone Three.js 3D WebGL Engine Layer
+│   │   └── ConstellationEngine.js  # Pure Three.js scene, camera, lights, particle galaxy, raycaster
+│   │
 │   ├── pages/                      # Top-level view controllers
 │   │   ├── Home.jsx                # Decomposed landing view calling modular home sections
 │   │   ├── Explore.jsx             # Grid & spool view with GSAP cascade stagger & filters
@@ -204,7 +207,7 @@ FrontendArena/
 │       │   ├── PatternDiscoveries.jsx # Grid of empirical data behavioral insights
 │       │   └── FeaturedMoments.jsx # Spotlight-illuminated synchronized moment cards
 │       │
-│       ├── ThreeConstellation.jsx  # WebGL 3D constellation engine with raycasting hover
+│       ├── ThreeConstellation.jsx  # React UI component delegating to ConstellationEngine
 │       ├── LifeConstellation.jsx   # 2D ambient constellation canvas fallback
 │       ├── ConnectionGraph.jsx     # Node-link graph canvas using @xyflow/react
 │       ├── StatsCard.jsx           # KPI card with GSAP animated numerical counter roll-up
