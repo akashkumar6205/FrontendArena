@@ -12,6 +12,12 @@ import { getAllConnections, getLifeMoments } from './utils/connections'
 import { generateInsights } from './utils/insights'
 import { getLifeChapters } from './utils/chapters'
 
+/**
+ * Root Application Container.
+ * Computes normalized receipts, cross-event connection bonds, life moments,
+ * behavioral insights, and chronological chapters with memoized state.
+ * Directs top-level page routing and modal states with GSAP PageTransition.
+ */
 export default function App() {
   const [activePage, setActivePage] = useState('home')
   const [selectedReceipt, setSelectedReceipt] = useState(null)

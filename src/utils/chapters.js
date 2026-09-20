@@ -1,7 +1,18 @@
 /**
  * Narrative Chapter / Life Era Generator
+ * Groups chronological receipts and highlighted moments into distinct life phases.
  */
 
+/**
+ * Generates structured life chapters:
+ * 1. The Late-Night Hackathon Era (high-velocity sprints & synthwave)
+ * 2. The Winter Solstice Calm (bookstores & acoustic reflection)
+ * 3. Metropolitan Flow & Transit (urban mobility & morning espresso)
+ *
+ * @param {Array<Object>} receipts - All normalized receipts
+ * @param {Array<Object>} moments - Synchronized Life Moments
+ * @returns {Array<Object>} Chronological chapters
+ */
 export function getLifeChapters(receipts, moments) {
   return [
     {

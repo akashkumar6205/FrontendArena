@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
-import { ChevronDown, Menu, X, Sparkles, Layers, GitMerge, BookOpen, Compass, Receipt, ArrowUpRight } from 'lucide-react'
+import { ChevronDown, Menu, X, Sparkles, Layers, GitMerge, BookOpen } from 'lucide-react'
 
+/**
+ * Global Navigation Bar component.
+ * Provides primary view switching, dropdown menus, stats counters, and mobile drawer.
+ */
 export function Navbar({ activePage, setActivePage, stats }) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState(null)
@@ -30,9 +34,6 @@ export function Navbar({ activePage, setActivePage, stats }) {
               <span className="font-sans font-bold tracking-tight text-white text-base block group-hover:text-amber-400 transition-colors">
                 Life Receipts
               </span>
-              {/* <span className="hidden sm:inline-block px-1.5 py-0.5 rounded text-[10px] font-mono bg-[#15171c] text-zinc-400 border border-[#272930]">
-             
-              </span> */}
             </div>
           </button>
 

@@ -1,18 +1,14 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react'
 import * as THREE from 'three'
 import gsap from 'gsap'
-import { Sparkles, RotateCcw, ZoomIn, ZoomOut, Layers, AlertCircle, RefreshCw } from 'lucide-react'
+import { Sparkles, RotateCcw, ZoomIn, ZoomOut, AlertCircle, RefreshCw } from 'lucide-react'
+import { TYPE_COLORS_INT } from '../constants/theme'
 
-// Color map for 3D nodes
-const TYPE_COLORS = {
-  music: 0x8b5cf6,      // Purple
-  purchase: 0x10b981,   // Emerald
-  expense: 0xec4899,    // Pink
-  place: 0x06b6d4,      // Cyan
-  note: 0x6366f1,       // Indigo
-  moment: 0xf59e0b      // Amber
-}
-
+/**
+ * ThreeConstellation renders an interactive 3D WebGL galaxy of life receipts.
+ * Supports mouse orbit drag, raycasting hover with GSAP scale and emission,
+ * smooth camera fly-to on node click, and loading/empty/error states.
+ */
 export function ThreeConstellation({
   receipts = [],
   connections = [],
@@ -181,7 +177,7 @@ export function ThreeConstellation({
       nodeCoords[receipt.id] = new THREE.Vector3(x, posY, z)
 
       // Color based on receipt type
-      const hexColor = TYPE_COLORS[receipt.type] || 0x10b981
+      const hexColor = TYPE_COLORS_INT[receipt.type] || 0x10b981
 
       // 3D Sphere mesh for node
       const geometry = new THREE.SphereGeometry(receipt.type === 'moment' ? 6.5 : 5, 24, 24)

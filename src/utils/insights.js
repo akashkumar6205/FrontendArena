@@ -1,9 +1,20 @@
 /**
  * Automated Data Insights Generator
- * Analyzes normalized receipts and connections to generate factual stories
+ * Analyzes normalized receipts and connections to generate factual behavioral stories.
  */
 
-export function generateInsights(receipts, connections) {
+/**
+ * Generates empirical behavioral insight cards:
+ * 1. Night owl signature (ratio of post-midnight receipts)
+ * 2. Soundtrack of focus (most frequent artist during sessions)
+ * 3. Spending dynamics (total spend and coffee budget)
+ * 4. Location anchor point (top physical venue)
+ *
+ * @param {Array<Object>} receipts - All normalized receipts
+ * @param {Array<Object>} [connections] - All scored connections
+ * @returns {Array<Object>} Generated insight stories
+ */
+export function generateInsights(receipts, connections = []) {
   const insights = []
 
   // 1. Night Owl Ratio Analysis
@@ -11,7 +22,7 @@ export function generateInsights(receipts, connections) {
     const hour = new Date(r.datetime).getHours()
     return hour >= 23 || hour < 4
   })
-  const lateNightPct = Math.round((lateNightReceipts.length / receipts.length) * 100)
+  const lateNightPct = Math.round((lateNightReceipts.length / Math.max(receipts.length, 1)) * 100)
 
   insights.push({
     id: 'insight-night-owl',
@@ -28,7 +39,7 @@ export function generateInsights(receipts, connections) {
   const musicReceipts = receipts.filter(r => r.type === 'music')
   const artistsCount = {}
   musicReceipts.forEach(m => {
-    const artist = m.metadata.artist || 'Unknown'
+    const artist = m.metadata?.artist || 'Unknown'
     artistsCount[artist] = (artistsCount[artist] || 0) + 1
   })
 
@@ -39,7 +50,7 @@ export function generateInsights(receipts, connections) {
     type: 'music',
     badge: '🎵 Soundtrack of Focus',
     title: `Top artist "${topArtist[0]}" powers your high-focus sessions`,
-    description: `Music streams repeatedly synchronize with coffee orders and note-taking sessions. ${topArtist[0]} was playing during 3 major connected life moments.`,
+    description: `Music streams repeatedly synchronize with coffee orders and note-taking sessions. ${topArtist[0]} was playing during major connected life moments.`,
     stat: `${topArtist[1]} Tracks`,
     statLabel: 'Focus Sessions Accompanied',
     accentColor: 'emerald'

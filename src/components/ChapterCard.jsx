@@ -1,5 +1,5 @@
 import React from 'react'
-import { Calendar, Compass, Moon, BookOpen, ArrowRight, Sparkles, MapPin, Layers } from 'lucide-react'
+import { Calendar, Compass, Moon, BookOpen, Sparkles, MapPin, Layers } from 'lucide-react'
 
 const ICON_MAP = {
   Moon: Moon,
@@ -7,6 +7,9 @@ const ICON_MAP = {
   Compass: Compass
 }
 
+/**
+ * ChapterCard renders a summarized era card with statistics and key receipts.
+ */
 export function ChapterCard({ chapter, onOpenMoment }) {
   const IconComponent = ICON_MAP[chapter.icon] || Compass
 

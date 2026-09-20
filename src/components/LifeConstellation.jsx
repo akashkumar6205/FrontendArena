@@ -1,15 +1,19 @@
 import React, { useState } from 'react'
 import { ThreeConstellation } from './ThreeConstellation'
 import { motion } from 'framer-motion'
-import { Music, CreditCard, MapPin, FileText, Sparkles, Receipt, ArrowRight, Box, Compass } from 'lucide-react'
+import { ArrowRight, Box, Compass } from 'lucide-react'
+import { ICON_MAP } from '../constants/theme'
 
+/**
+ * Static preview node anchors for 2D Planar Diagram view.
+ */
 const NODE_TYPES = [
-  { icon: Music, label: 'Music Stream', type: 'music', color: '#8B5CF6', x: 20, y: 30, receiptId: 'spotify-101' },
-  { icon: CreditCard, label: 'Card Transaction', type: 'purchase', color: '#10B981', x: 45, y: 15, receiptId: 'tx-201' },
-  { icon: MapPin, label: 'GPS Check-in', type: 'place', color: '#06B6D4', x: 75, y: 35, receiptId: 'loc-401' },
-  { icon: FileText, label: 'Personal Note', type: 'note', color: '#6366F1', x: 30, y: 70, receiptId: 'note-501' },
-  { icon: Sparkles, label: 'Life Moment', type: 'moment', color: '#F59E0B', x: 55, y: 55, receiptId: 'moment-2024-11-12-spotify-101' },
-  { icon: Receipt, label: 'Expense Record', type: 'expense', color: '#EC4899', x: 80, y: 75, receiptId: 'exp-303' }
+  { icon: ICON_MAP.music, label: 'Music Stream', type: 'music', color: '#8B5CF6', x: 20, y: 30, receiptId: 'spotify-101' },
+  { icon: ICON_MAP.purchase, label: 'Card Transaction', type: 'purchase', color: '#10B981', x: 45, y: 15, receiptId: 'tx-201' },
+  { icon: ICON_MAP.place, label: 'GPS Check-in', type: 'place', color: '#06B6D4', x: 75, y: 35, receiptId: 'loc-401' },
+  { icon: ICON_MAP.note, label: 'Personal Note', type: 'note', color: '#6366F1', x: 30, y: 70, receiptId: 'note-501' },
+  { icon: ICON_MAP.moment, label: 'Life Moment', type: 'moment', color: '#F59E0B', x: 55, y: 55, receiptId: 'moment-2024-11-12-spotify-101' },
+  { icon: ICON_MAP.expense, label: 'Expense Record', type: 'expense', color: '#EC4899', x: 80, y: 75, receiptId: 'exp-303' }
 ]
 
 const EDGES = [
@@ -21,6 +25,11 @@ const EDGES = [
   { from: 4, to: 5, reason: 'software bill' }
 ]
 
+/**
+ * LifeConstellation provides dual viewing modes:
+ * 1. An immersive Three.js 3D WebGL orbit canvas with raycasting and GSAP camera tweens.
+ * 2. A 2D planar schematic diagram for rapid topological inspection.
+ */
 export function LifeConstellation({ receipts = [], connections = [], onSelectReceipt, onOpenGraph }) {
   const [viewFormat, setViewFormat] = useState('3d') // '3d' | '2d'
   const [activeNode, setActiveNode] = useState(NODE_TYPES[4])

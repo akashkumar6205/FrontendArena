@@ -5,23 +5,45 @@ import locationsData from '../data/locations.json'
 import notesData from '../data/notes.json'
 
 /**
- * Normalizes all raw datasets into a unified receipt schema
+ * Helper to parse an ISO timestamp into uniform date, time, and millisecond values.
+ * Deduplicates date string manipulation across all ingestion channels.
+ *
+ * @param {string} timestamp - ISO timestamp string
+ * @returns {{ date: string, time: string, datetime: string, timestampMs: number }}
+ */
+function parseTimestamp(timestamp) {
+  const dt = new Date(timestamp)
+  return {
+    date: dt.toISOString().split('T')[0],
+    time: dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
+    datetime: dt.toISOString(),
+    timestampMs: dt.getTime()
+  }
+}
+
+/**
+ * Normalizes all heterogeneous raw datasets into a unified receipt schema.
+ * Ingests:
+ * 1. Spotify listening logs
+ * 2. Bank / merchant card transactions
+ * 3. Recurring subscription & housing expenses
+ * 4. GPS check-ins & physical places
+ * 5. Personal markdown notes & emotional tags
+ *
+ * @returns {Array<Object>} Chronologically sorted array of normalized receipts
  */
 export function getNormalizedReceipts() {
   const receipts = []
 
   // 1. Spotify Music Listening History
   spotifyData.forEach((item) => {
-    const dt = new Date(item.timestamp)
+    const timeInfo = parseTimestamp(item.timestamp)
     receipts.push({
       id: item.id,
       type: 'music',
       title: item.track_name,
       description: `${item.artist} — ${item.album}`,
-      date: dt.toISOString().split('T')[0],
-      time: dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
-      datetime: dt.toISOString(),
-      timestampMs: dt.getTime(),
+      ...timeInfo,
       location: null,
       amount: null,
       currency: null,
@@ -40,16 +62,13 @@ export function getNormalizedReceipts() {
 
   // 2. Financial Transactions
   transactionsData.forEach((item) => {
-    const dt = new Date(item.timestamp)
+    const timeInfo = parseTimestamp(item.timestamp)
     receipts.push({
       id: item.id,
       type: 'purchase',
       title: item.merchant,
       description: `${item.category} purchase via ${item.payment_method}`,
-      date: dt.toISOString().split('T')[0],
-      time: dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
-      datetime: dt.toISOString(),
-      timestampMs: dt.getTime(),
+      ...timeInfo,
       location: item.location ? {
         name: item.location.name,
         address: item.location.address,
@@ -70,16 +89,13 @@ export function getNormalizedReceipts() {
 
   // 3. Household & Business Expenses
   expensesData.forEach((item) => {
-    const dt = new Date(item.timestamp)
+    const timeInfo = parseTimestamp(item.timestamp)
     receipts.push({
       id: item.id,
       type: 'expense',
       title: item.title,
       description: `${item.frequency} ${item.category} to ${item.vendor}`,
-      date: dt.toISOString().split('T')[0],
-      time: dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
-      datetime: dt.toISOString(),
-      timestampMs: dt.getTime(),
+      ...timeInfo,
       location: null,
       amount: item.amount,
       currency: item.currency || 'USD',
@@ -96,16 +112,13 @@ export function getNormalizedReceipts() {
 
   // 4. GPS Check-ins & Places
   locationsData.forEach((item) => {
-    const dt = new Date(item.timestamp)
+    const timeInfo = parseTimestamp(item.timestamp)
     receipts.push({
       id: item.id,
       type: 'place',
       title: item.name,
       description: `${item.category} at ${item.address}`,
-      date: dt.toISOString().split('T')[0],
-      time: dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
-      datetime: dt.toISOString(),
-      timestampMs: dt.getTime(),
+      ...timeInfo,
       location: {
         name: item.name,
         address: item.address,
@@ -126,16 +139,13 @@ export function getNormalizedReceipts() {
 
   // 5. Personal Digital Notes
   notesData.forEach((item) => {
-    const dt = new Date(item.timestamp)
+    const timeInfo = parseTimestamp(item.timestamp)
     receipts.push({
       id: item.id,
       type: 'note',
       title: item.title,
       description: item.content,
-      date: dt.toISOString().split('T')[0],
-      time: dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }),
-      datetime: dt.toISOString(),
-      timestampMs: dt.getTime(),
+      ...timeInfo,
       location: null,
       amount: null,
       currency: null,
@@ -149,11 +159,6 @@ export function getNormalizedReceipts() {
     })
   })
 
-  // Sort by date/time ascending
+  // Sort chronologically ascending
   return receipts.sort((a, b) => a.timestampMs - b.timestampMs)
-}
-
-export function getCategories(receipts) {
-  const set = new Set(receipts.map(r => r.type))
-  return ['all', ...Array.from(set)]
 }

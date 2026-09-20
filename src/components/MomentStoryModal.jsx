@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { X, ChevronRight, ChevronLeft, Sparkles, Clock, Calendar, GitMerge, CheckCircle2 } from 'lucide-react'
 import confetti from 'canvas-confetti'
 
+/**
+ * Interactive step-by-step story modal walking through a synchronized Life Moment.
+ * Culminates in celebratory confetti when reaching the moment revelation.
+ */
 export function MomentStoryModal({ moment, onClose }) {
   const [step, setStep] = useState(0)
 

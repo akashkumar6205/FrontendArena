@@ -1,7 +1,11 @@
 import React from 'react'
 import { ChapterCard } from '../components/ChapterCard'
-import { BookOpen, Sparkles } from 'lucide-react'
+import { BookOpen } from 'lucide-react'
 
+/**
+ * Chapters page view controller.
+ * Displays chronologically synthesized narrative eras with life themes and metrics.
+ */
 export function Chapters({ chapters, onOpenMoment }) {
   return (
     <div className="space-y-8 pb-16">

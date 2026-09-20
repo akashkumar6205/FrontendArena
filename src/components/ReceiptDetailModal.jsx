@@ -1,7 +1,10 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { X, Clock, Calendar, MapPin, GitMerge, FileText, ArrowRight } from 'lucide-react'
+import { X, Clock, Calendar, MapPin, GitMerge, ArrowRight } from 'lucide-react'
 
+/**
+ * Inspection modal for examining individual receipt metadata and connected life events.
+ */
 export function ReceiptDetailModal({ receipt, connections = [], onClose, onSelectConnected }) {
   if (!receipt) return null
 

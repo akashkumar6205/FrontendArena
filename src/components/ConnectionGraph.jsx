@@ -5,36 +5,22 @@ import {
   Background,
   applyNodeChanges,
   applyEdgeChanges,
-  MarkerType,
   Handle,
   Position
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
-import { Music, CreditCard, MapPin, FileText, Receipt, Sparkles, Filter, Info, X, GitMerge, CheckCircle } from 'lucide-react'
+import { Filter, Info, X, GitMerge, FileText } from 'lucide-react'
+import { ICON_MAP, COLOR_THEMES } from '../constants/theme'
 
-// Custom Node Component for Receipts
+/**
+ * Custom Node component rendered by React Flow for individual receipts.
+ */
 function CustomReceiptNode({ data }) {
-  const ICON_MAP = {
-    music: Music,
-    purchase: CreditCard,
-    expense: Receipt,
-    place: MapPin,
-    note: FileText
-  }
-
-  const COLOR_THEMES = {
-    music: 'bg-purple-950/80 border-purple-500/50 text-purple-300',
-    purchase: 'bg-emerald-950/80 border-emerald-500/50 text-emerald-300',
-    expense: 'bg-amber-950/80 border-amber-500/50 text-amber-300',
-    place: 'bg-cyan-950/80 border-cyan-500/50 text-cyan-300',
-    note: 'bg-indigo-950/80 border-indigo-500/50 text-indigo-300'
-  }
-
   const IconComponent = ICON_MAP[data.type] || FileText
   const theme = COLOR_THEMES[data.type] || COLOR_THEMES.note
 
   return (
-    <div className={`px-4 py-3 rounded-xl border ${theme} shadow-xl backdrop-blur-md max-w-[220px] transition-all hover:scale-105 hover:border-emerald-400`}>
+    <div className={`px-4 py-3 rounded-xl border ${theme.nodeBorder || 'border-zinc-700'} ${theme.nodeBg || 'bg-[#111216]'} text-zinc-300 shadow-xl backdrop-blur-md max-w-[220px] transition-all hover:scale-105 hover:border-emerald-400`}>
       <Handle type="target" position={Position.Top} className="w-2 h-2 !bg-emerald-400" />
       <div className="flex items-center gap-2 mb-1">
         <IconComponent className="w-3.5 h-3.5" />
@@ -62,6 +48,9 @@ const nodeTypes = {
   customReceipt: CustomReceiptNode
 }
 
+/**
+ * Interactive React Flow graph for discovering connections across receipts.
+ */
 export function ConnectionGraph({ receipts, connections, onSelectReceipt }) {
   const [nodes, setNodes] = useState([])
   const [edges, setEdges] = useState([])
@@ -69,7 +58,7 @@ export function ConnectionGraph({ receipts, connections, onSelectReceipt }) {
   const [selectedEdge, setSelectedEdge] = useState(null)
   const [selectedNode, setSelectedNode] = useState(null)
 
-  // Build graph nodes & edges dynamically based on receipts & connection thresholds
+  // Dynamically calculate graph nodes & edges arranged in a radial layout
   useMemo(() => {
     const filteredConnections = connections.filter(c => c.score >= minScore)
     const connectedNodeIds = new Set()
@@ -78,7 +67,7 @@ export function ConnectionGraph({ receipts, connections, onSelectReceipt }) {
       connectedNodeIds.add(c.target)
     })
 
-    // Layout calculation (circle / grid arrangement for node positions)
+    // Radial layout calculation for node distribution
     const activeReceipts = receipts.filter(r => connectedNodeIds.has(r.id))
     const total = activeReceipts.length
     const radius = Math.min(window.innerWidth * 0.3, 340)
@@ -86,7 +75,7 @@ export function ConnectionGraph({ receipts, connections, onSelectReceipt }) {
     const centerY = 300
 
     const graphNodes = activeReceipts.map((r, idx) => {
-      const angle = (idx / total) * 2 * Math.PI
+      const angle = (idx / Math.max(total, 1)) * 2 * Math.PI
       const x = centerX + radius * Math.cos(angle)
       const y = centerY + radius * Math.sin(angle)
 
@@ -98,7 +87,7 @@ export function ConnectionGraph({ receipts, connections, onSelectReceipt }) {
       }
     })
 
-    const graphEdges = filteredConnections.map((conn, idx) => ({
+    const graphEdges = filteredConnections.map((conn) => ({
       id: `edge-${conn.source}-${conn.target}`,
       source: conn.source,
       target: conn.target,
@@ -117,6 +106,7 @@ export function ConnectionGraph({ receipts, connections, onSelectReceipt }) {
     setEdges(graphEdges)
   }, [receipts, connections, minScore])
 
+  // React Flow state handlers
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
     []
@@ -158,14 +148,14 @@ export function ConnectionGraph({ receipts, connections, onSelectReceipt }) {
         {/* Filter buttons by score threshold */}
         <div className="flex items-center gap-2 bg-dark-bg p-1.5 rounded-xl border border-dark-border">
           <span className="text-[11px] font-mono text-gray-400 px-2 flex items-center gap-1">
-            <Filter className="w-3 h-3 text-emerald-400" />
-            Strength Filter:
+            <Filter className="w-3.5 h-3.5 text-emerald-400" />
+            Min Score:
           </span>
           <button
             onClick={() => setMinScore(2)}
-            className={`px-3 py-1 rounded-lg text-xs font-mono transition-all ${
+            className={`px-3 py-1 rounded-lg text-xs font-mono font-semibold transition-all ${
               minScore === 2 
-                ? 'bg-emerald-500 text-black font-bold' 
+                ? 'bg-emerald-500 text-black shadow-glow-emerald' 
                 : 'text-gray-400 hover:text-white'
             }`}
           >
@@ -173,9 +163,9 @@ export function ConnectionGraph({ receipts, connections, onSelectReceipt }) {
           </button>
           <button
             onClick={() => setMinScore(4)}
-            className={`px-3 py-1 rounded-lg text-xs font-mono transition-all ${
+            className={`px-3 py-1 rounded-lg text-xs font-mono font-semibold transition-all ${
               minScore === 4 
-                ? 'bg-amber-500 text-black font-bold' 
+                ? 'bg-amber-500 text-black' 
                 : 'text-gray-400 hover:text-white'
             }`}
           >
@@ -183,9 +173,9 @@ export function ConnectionGraph({ receipts, connections, onSelectReceipt }) {
           </button>
           <button
             onClick={() => setMinScore(6)}
-            className={`px-3 py-1 rounded-lg text-xs font-mono transition-all ${
+            className={`px-3 py-1 rounded-lg text-xs font-mono font-semibold transition-all ${
               minScore === 6 
-                ? 'bg-purple-500 text-white font-bold shadow-glow-violet' 
+                ? 'bg-purple-500 text-white' 
                 : 'text-gray-400 hover:text-white'
             }`}
           >
@@ -194,8 +184,8 @@ export function ConnectionGraph({ receipts, connections, onSelectReceipt }) {
         </div>
       </div>
 
-      {/* React Flow Canvas */}
-      <div className="flex-1 w-full h-full relative">
+      {/* Main Flow Canvas */}
+      <div className="flex-1 w-full relative">
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -205,94 +195,104 @@ export function ConnectionGraph({ receipts, connections, onSelectReceipt }) {
           onEdgeClick={onEdgeClick}
           nodeTypes={nodeTypes}
           fitView
-          colorMode="dark"
+          className="bg-dark-bg"
         >
-          <Background color="#1F293D" gap={20} size={1} />
-          <Controls />
+          <Background color="#1f293d" gap={20} size={1} />
+          <Controls className="!bg-dark-card !border-dark-border !fill-white" />
         </ReactFlow>
-      </div>
 
-      {/* Selected Edge / Node Inspector Drawer */}
-      {(selectedEdge || selectedNode) && (
-        <div className="absolute bottom-4 right-4 z-30 w-full max-w-sm bg-dark-card/95 border border-emerald-500/40 rounded-2xl p-5 shadow-2xl backdrop-blur-md">
-          <div className="flex items-center justify-between mb-3 border-b border-dark-border pb-2">
-            <span className="text-xs font-mono uppercase tracking-widest text-emerald-400 font-bold flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5" />
-              {selectedEdge ? 'Connection Discovered' : 'Receipt Node Details'}
-            </span>
+        {/* Selected Node Floating Details Panel */}
+        {selectedNode && (
+          <div className="absolute top-4 right-4 z-20 w-80 bg-dark-card/95 border border-emerald-500/50 rounded-2xl p-5 shadow-2xl backdrop-blur-md space-y-3">
+            <div className="flex items-center justify-between border-b border-dark-border pb-2">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-400 font-bold">
+                {selectedNode.type} Details
+              </span>
+              <button
+                onClick={() => setSelectedNode(null)}
+                className="text-gray-400 hover:text-white"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div>
+              <h4 className="font-receipt font-bold text-white text-base">
+                {selectedNode.title}
+              </h4>
+              <p className="text-xs text-gray-400 mt-1">
+                {selectedNode.description}
+              </p>
+            </div>
+
+            <div className="text-[11px] font-mono text-gray-300 space-y-1 pt-2 border-t border-dark-border">
+              <div>Date: {selectedNode.date} {selectedNode.time}</div>
+              {selectedNode.amount && <div>Amount: ${selectedNode.amount.toFixed(2)}</div>}
+              {selectedNode.location?.name && <div>Venue: {selectedNode.location.name}</div>}
+            </div>
+
             <button
-              onClick={() => {
-                setSelectedEdge(null)
-                setSelectedNode(null)
-              }}
-              className="text-gray-400 hover:text-white p-1 rounded-lg"
+              onClick={() => onSelectReceipt && onSelectReceipt(selectedNode)}
+              className="w-full py-2 bg-emerald-500 text-black text-xs font-bold rounded-xl hover:bg-emerald-400 transition-all uppercase"
             >
-              <X className="w-4 h-4" />
+              Open Full Receipt View
             </button>
           </div>
+        )}
 
-          {selectedEdge && (
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono px-2 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-bold">
-                  {selectedEdge.strength}
-                </span>
-                <span className="text-sm font-mono font-bold text-white">
-                  Score: +{selectedEdge.score}
-                </span>
+        {/* Selected Edge Floating Bond Panel */}
+        {selectedEdge && (
+          <div className="absolute top-4 right-4 z-20 w-80 bg-dark-card/95 border border-amber-500/50 rounded-2xl p-5 shadow-2xl backdrop-blur-md space-y-3">
+            <div className="flex items-center justify-between border-b border-dark-border pb-2">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-amber-400 font-bold">
+                Connection Bond (+{selectedEdge.score} pts)
+              </span>
+              <button
+                onClick={() => setSelectedEdge(null)}
+                className="text-gray-400 hover:text-white"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div>
+              <div className="text-xs font-bold text-white">
+                {selectedEdge.r1.title} ↔ {selectedEdge.r2.title}
               </div>
+              <span className="text-[10px] font-mono uppercase text-gray-400 mt-1 block">
+                Strength: {selectedEdge.strength}
+              </span>
+            </div>
 
-              <div className="p-3 rounded-xl bg-dark-bg border border-dark-border space-y-2">
-                <div className="text-xs font-bold text-white">
-                  {selectedEdge.r1.title} ↔ {selectedEdge.r2.title}
+            <div className="text-xs text-gray-300 space-y-1.5 pt-2 border-t border-dark-border">
+              <div className="text-[11px] font-mono text-gray-400 uppercase">
+                Why They Are Connected:
+              </div>
+              {selectedEdge.reasons.map((r, i) => (
+                <div key={i} className="flex items-start gap-1.5 text-xs text-emerald-300">
+                  <span>•</span>
+                  <span>{r}</span>
                 </div>
-                <ul className="space-y-1">
-                  {selectedEdge.reasons.map((reason, idx) => (
-                    <li key={idx} className="text-xs text-gray-300 flex items-start gap-1.5 font-mono">
-                      <CheckCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0 mt-0.5" />
-                      <span>{reason}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <button
-                onClick={() => onSelectReceipt && onSelectReceipt(selectedEdge.r1)}
-                className="w-full text-xs font-semibold py-2 rounded-xl bg-emerald-500 text-black hover:bg-emerald-400 transition-colors"
-              >
-                Inspect Connected Receipts →
-              </button>
+              ))}
             </div>
-          )}
 
-          {selectedNode && (
-            <div className="space-y-3">
-              <div>
-                <span className="text-xs font-mono text-gray-400 uppercase">
-                  {selectedNode.type} RECEIPT
-                </span>
-                <h4 className="text-base font-receipt font-bold text-white">
-                  {selectedNode.title}
-                </h4>
-                <p className="text-xs text-gray-300 mt-1">
-                  {selectedNode.description}
-                </p>
-              </div>
+            <button
+              onClick={() => onSelectReceipt && onSelectReceipt(selectedEdge.r1)}
+              className="w-full py-2 bg-amber-500 text-black text-xs font-bold rounded-xl hover:bg-amber-400 transition-all uppercase"
+            >
+              Inspect First Receipt
+            </button>
+          </div>
+        )}
 
-              <div className="text-xs font-mono text-emerald-400 pt-2 border-t border-dark-border">
-                Timestamp: {selectedNode.date} at {selectedNode.time}
-              </div>
-
-              <button
-                onClick={() => onSelectReceipt && onSelectReceipt(selectedNode)}
-                className="w-full text-xs font-semibold py-2 rounded-xl bg-emerald-500 text-black hover:bg-emerald-400 transition-colors"
-              >
-                View Full Receipt →
-              </button>
-            </div>
-          )}
+        {/* Canvas Helper Legend */}
+        <div className="absolute bottom-4 left-4 z-10 bg-dark-card/90 border border-dark-border p-3 rounded-2xl backdrop-blur-md text-[11px] font-mono text-gray-400 flex items-center gap-4">
+          <div className="flex items-center gap-1.5">
+            <Info className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Click any node or link line to inspect bond properties</span>
+          </div>
         </div>
-      )}
+      </div>
     </div>
   )
 }

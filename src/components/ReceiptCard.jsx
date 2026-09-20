@@ -1,53 +1,18 @@
 import React, { useRef } from 'react'
 import gsap from 'gsap'
-import { Music, CreditCard, Receipt, MapPin, FileText, GitMerge, ArrowRight, Clock, Calendar } from 'lucide-react'
+import { FileText, GitMerge, ArrowRight, Clock, Calendar } from 'lucide-react'
+import { ICON_MAP, COLOR_THEMES } from '../constants/theme'
 
-const ICON_MAP = {
-  music: Music,
-  purchase: CreditCard,
-  expense: Receipt,
-  place: MapPin,
-  note: FileText
-}
-
-const COLOR_THEMES = {
-  music: {
-    bg: 'from-purple-950/40 to-dark-card',
-    border: 'border-purple-500/30',
-    badge: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
-    accent: 'text-purple-400',
-    glow: 'hover:shadow-glow-violet'
-  },
-  purchase: {
-    bg: 'from-emerald-950/40 to-dark-card',
-    border: 'border-emerald-500/30',
-    badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
-    accent: 'text-emerald-400',
-    glow: 'hover:shadow-glow-emerald'
-  },
-  expense: {
-    bg: 'from-amber-950/40 to-dark-card',
-    border: 'border-amber-500/30',
-    badge: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
-    accent: 'text-amber-400',
-    glow: 'hover:shadow-[0_0_25px_-5px_rgba(245,158,11,0.3)]'
-  },
-  place: {
-    bg: 'from-cyan-950/40 to-dark-card',
-    border: 'border-cyan-500/30',
-    badge: 'bg-cyan-500/20 text-cyan-300 border-cyan-500/30',
-    accent: 'text-cyan-400',
-    glow: 'hover:shadow-glow-cyan'
-  },
-  note: {
-    bg: 'from-indigo-950/40 to-dark-card',
-    border: 'border-indigo-500/30',
-    badge: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30',
-    accent: 'text-indigo-400',
-    glow: 'hover:shadow-[0_0_25px_-5px_rgba(99,102,241,0.3)]'
-  }
-}
-
+/**
+ * ReceiptCard component representing a single normalized receipt item.
+ * Features GSAP 3D perspective tilt on hover and a tactile scale punch on click.
+ *
+ * @param {Object} props
+ * @param {Object} props.receipt - The normalized receipt object
+ * @param {number} props.connectionCount - Number of discovered links for this receipt
+ * @param {Function} props.onClick - Click callback to inspect this receipt
+ * @param {Function} props.onSelectMoment - Click callback to open connected moment story
+ */
 export function ReceiptCard({ receipt, connectionCount = 0, onClick, onSelectMoment }) {
   const cardRef = useRef(null)
   const IconComponent = ICON_MAP[receipt.type] || FileText
@@ -60,7 +25,7 @@ export function ReceiptCard({ receipt, connectionCount = 0, onClick, onSelectMom
     const x = e.clientX - rect.left - rect.width / 2
     const y = e.clientY - rect.top - rect.height / 2
     
-    // Calculate tilt angles
+    // Calculate tilt angles based on cursor offset from card center
     const rotateX = -(y / rect.height) * 12
     const rotateY = (x / rect.width) * 12
 
@@ -74,7 +39,7 @@ export function ReceiptCard({ receipt, connectionCount = 0, onClick, onSelectMom
     })
   }
 
-  // Restore Card on Mouse Leave
+  // Restore Card rotation and scale on Mouse Leave
   const handleMouseLeave = () => {
     if (!cardRef.current) return
     gsap.to(cardRef.current, {
@@ -86,8 +51,8 @@ export function ReceiptCard({ receipt, connectionCount = 0, onClick, onSelectMom
     })
   }
 
-  // GSAP Click Punch Animation
-  const handleClick = (e) => {
+  // Tactile Click Punch Animation
+  const handleClick = () => {
     if (cardRef.current) {
       gsap.fromTo(
         cardRef.current,

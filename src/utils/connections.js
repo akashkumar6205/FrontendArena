@@ -1,9 +1,22 @@
 /**
  * Connection Discovery & Scoring Engine
+ * Analyzes normalized receipts across temporal, spatial, and semantic dimensions
+ * to discover meaningful connections and cluster them into narrative "Life Moments".
  */
 
 /**
- * Calculates relationship score between two receipt items
+ * Calculates a multi-factor relationship score between two receipt items.
+ *
+ * Scoring Factors:
+ * - Time Delta: <=15 min (+4), <=30 min (+2), <=120 min (+1)
+ * - Same Date: (+2)
+ * - Location: Exact venue match (+4), Same city (+1)
+ * - Semantic Tags: Shared keywords in tags[] (+3)
+ * - Cross-Activity Synergy: e.g. Music + Purchase, Music + Note (+2)
+ *
+ * @param {Object} r1 - First receipt item
+ * @param {Object} r2 - Second receipt item
+ * @returns {Object|null} Scored connection object or null if score < 2
  */
 export function scoreConnection(r1, r2) {
   if (r1.id === r2.id) return null
@@ -27,7 +40,7 @@ export function scoreConnection(r1, r2) {
     reasons.push(`Occurred within ${Math.round(diffMinutes / 60)} hour(s) of each other`)
   }
 
-  // 2. Same date rule
+  // 2. Same calendar date rule
   if (isSameDate) {
     score += 2
     if (!reasons.some(r => r.includes('minutes'))) {
@@ -35,7 +48,7 @@ export function scoreConnection(r1, r2) {
     }
   }
 
-  // 3. Location proximity / match
+  // 3. Location proximity / venue match
   if (r1.location && r2.location) {
     if (r1.location.name && r2.location.name && (r1.location.name.includes(r2.location.name) || r2.location.name.includes(r1.location.name))) {
       score += 4
@@ -46,7 +59,7 @@ export function scoreConnection(r1, r2) {
     }
   }
 
-  // 4. Keyword & Tag matching
+  // 4. Keyword & semantic tag matching
   const tags1 = r1.tags || []
   const tags2 = r2.tags || []
   const matchingTags = tags1.filter(t => tags2.includes(t))
@@ -56,13 +69,14 @@ export function scoreConnection(r1, r2) {
     reasons.push(`Shared thematic context: ${matchingTags.join(', ')}`)
   }
 
-  // 5. Cross-category synergy (e.g. Music + Food, Music + Note, Place + Purchase)
+  // 5. Cross-category synergy (e.g. Music + Purchase, Music + Note, Place + Purchase)
   const typePair = [r1.type, r2.type].sort().join('+')
   if (typePair === 'music+purchase' || typePair === 'music+note' || typePair === 'place+purchase') {
     score += 2
     reasons.push(`Cross-activity relationship between ${r1.type} and ${r2.type}`)
   }
 
+  // Threshold: Discard insignificant correlations (< 2)
   if (score < 2) return null
 
   let strength = 'Same-day relationship'
@@ -89,7 +103,10 @@ export function scoreConnection(r1, r2) {
 }
 
 /**
- * Generates all unique connections across receipts
+ * Generates all unique connections across receipts, deduplicating unordered pairs.
+ *
+ * @param {Array<Object>} receipts - All normalized receipts
+ * @returns {Array<Object>} Sorted list of connections descending by score
  */
 export function getAllConnections(receipts) {
   const connections = []
@@ -112,10 +129,14 @@ export function getAllConnections(receipts) {
 }
 
 /**
- * Groups connected receipts into cohesive "Life Moments"
+ * Groups connected receipts into cohesive, narrative "Life Moments"
+ * based on calendar date groupings and localized 90-minute time windows.
+ *
+ * @param {Array<Object>} receipts - Normalized receipts
+ * @param {Array<Object>} connections - Scored connections
+ * @returns {Array<Object>} Life moment stories sorted by density
  */
 export function getLifeMoments(receipts, connections) {
-  // Find clusters where 3+ receipts occur within a short window on the same date
   const dateGroups = {}
   receipts.forEach(r => {
     if (!dateGroups[r.date]) dateGroups[r.date] = []
@@ -127,7 +148,6 @@ export function getLifeMoments(receipts, connections) {
   Object.entries(dateGroups).forEach(([date, items]) => {
     if (items.length < 2) return
 
-    // Group items close in time
     let currentCluster = [items[0]]
 
     for (let i = 1; i < items.length; i++) {
@@ -153,12 +173,14 @@ export function getLifeMoments(receipts, connections) {
   return moments.sort((a, b) => b.receipts.length - a.receipts.length)
 }
 
+/**
+ * Constructs a structured moment object with summary narrative and duration.
+ */
 function buildMomentObject(cluster, date, allConnections) {
   const first = cluster[0]
   const last = cluster[cluster.length - 1]
   const totalDurationMins = Math.round((last.timestampMs - first.timestampMs) / (1000 * 60))
 
-  // Determine moment title based on contents & time
   const hour = new Date(first.datetime).getHours()
   let timeOfDay = 'Late Night'
   if (hour >= 5 && hour < 12) timeOfDay = 'Morning'
@@ -177,7 +199,6 @@ function buildMomentObject(cluster, date, allConnections) {
   else if (hasNote && hasMusic) title = 'Creative Flow Session'
   else if (timeOfDay === 'Evening') title = 'Evening Metropolitan Wind-Down'
 
-  // Extract connection notes for this cluster
   const clusterIds = new Set(cluster.map(c => c.id))
   const relevantConns = allConnections.filter(conn => clusterIds.has(conn.source) && clusterIds.has(conn.target))
 
@@ -195,6 +216,9 @@ function buildMomentObject(cluster, date, allConnections) {
   }
 }
 
+/**
+ * Generates descriptive revelation text summarizing cross-activity co-occurrences.
+ */
 function buildRevelationText(cluster, timeOfDay) {
   const music = cluster.find(c => c.type === 'music')
   const note = cluster.find(c => c.type === 'note')
