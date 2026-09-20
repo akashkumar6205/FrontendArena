@@ -1,0 +1,142 @@
+[
+  {
+    "id": "spotify-101",
+    "track_name": "Midnight City",
+    "artist": "M83",
+    "album": "Hurry Up, We're Dreaming",
+    "timestamp": "2024-11-12T01:14:20.000Z",
+    "duration_ms": 243000,
+    "platform": "Spotify iOS",
+    "device": "AirPods Pro"
+  },
+  {
+    "id": "spotify-102",
+    "track_name": "Resonance",
+    "artist": "HOME",
+    "album": "Odyssey",
+    "timestamp": "2024-11-12T01:28:45.000Z",
+    "duration_ms": 212000,
+    "platform": "Spotify Web Player",
+    "device": "MacBook Pro"
+  },
+  {
+    "id": "spotify-103",
+    "track_name": "Starboy",
+    "artist": "The Weeknd",
+    "album": "Starboy",
+    "timestamp": "2024-11-12T02:05:10.000Z",
+    "duration_ms": 230000,
+    "platform": "Spotify Web Player",
+    "device": "MacBook Pro"
+  },
+  {
+    "id": "spotify-104",
+    "track_name": "Coffee & TV",
+    "artist": "Blur",
+    "album": "13",
+    "timestamp": "2024-11-12T08:32:00.000Z",
+    "duration_ms": 340000,
+    "platform": "Spotify iOS",
+    "device": "AirPods Pro"
+  },
+  {
+    "id": "spotify-105",
+    "track_name": "Nuvole Bianche",
+    "artist": "Ludovico Einaudi",
+    "album": "Una Mattina",
+    "timestamp": "2024-11-13T14:15:00.000Z",
+    "duration_ms": 338000,
+    "platform": "Spotify Desktop",
+    "device": "MacBook Pro"
+  },
+  {
+    "id": "spotify-106",
+    "track_name": "Synthwave Boy",
+    "artist": "Lorn",
+    "album": "VESSEL",
+    "timestamp": "2024-11-13T23:45:10.000Z",
+    "duration_ms": 260000,
+    "platform": "Spotify iOS",
+    "device": "AirPods Pro"
+  },
+  {
+    "id": "spotify-107",
+    "track_name": "Nightcall",
+    "artist": "Kavinsky",
+    "album": "OutRun",
+    "timestamp": "2024-11-14T00:12:00.000Z",
+    "duration_ms": 259000,
+    "platform": "Spotify iOS",
+    "device": "Car Audio"
+  },
+  {
+    "id": "spotify-108",
+    "track_name": "Electric Feel",
+    "artist": "MGMT",
+    "album": "Oracular Spectacular",
+    "timestamp": "2024-12-02T16:20:00.000Z",
+    "duration_ms": 229000,
+    "platform": "Spotify Desktop",
+    "device": "MacBook Pro"
+  },
+  {
+    "id": "spotify-109",
+    "track_name": "Clair de Lune",
+    "artist": "Claude Debussy",
+    "album": "Suite bergamasque",
+    "timestamp": "2024-12-02T22:30:15.000Z",
+    "duration_ms": 300000,
+    "platform": "Spotify iOS",
+    "device": "Sonos Speaker"
+  },
+  {
+    "id": "spotify-110",
+    "track_name": "A Sky Full of Stars",
+    "artist": "Coldplay",
+    "album": "Ghost Stories",
+    "timestamp": "2024-12-03T19:40:00.000Z",
+    "duration_ms": 268000,
+    "platform": "Spotify iOS",
+    "device": "AirPods Pro"
+  },
+  {
+    "id": "spotify-111",
+    "track_name": "Transatlanticism",
+    "artist": "Death Cab for Cutie",
+    "album": "Transatlanticism",
+    "timestamp": "2025-01-16T10:05:00.000Z",
+    "duration_ms": 475000,
+    "platform": "Spotify iOS",
+    "device": "AirPods Pro"
+  },
+  {
+    "id": "spotify-112",
+    "track_name": "Instant Crush",
+    "artist": "Daft Punk ft. Julian Casablancas",
+    "album": "Random Access Memories",
+    "timestamp": "2025-01-16T14:48:00.000Z",
+    "duration_ms": 337000,
+    "platform": "Spotify Web Player",
+    "device": "MacBook Pro"
+  },
+  {
+    "id": "spotify-113",
+    "track_name": "Reflector",
+    "artist": "Arcade Fire",
+    "album": "Reflektor",
+    "timestamp": "2025-01-17T21:10:00.000Z",
+    "duration_ms": 454000,
+    "platform": "Spotify iOS",
+    "device": "Car Audio"
+  },
+  {
+    "id": "spotify-114",
+    "track_name": "Stayin' Alive",
+    "artist": "Bee Gees",
+    "album": "Saturday Night Fever",
+    "timestamp": "2025-01-18T09:15:00.000Z",
+    "duration_ms": 285000,
+    "platform": "Spotify iOS",
+    "device": "AirPods Pro"
+  }
+]

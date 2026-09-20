@@ -1,0 +1,72 @@
+[
+  {
+    "id": "loc-401",
+    "name": "7-Eleven 5th Ave Night Hub",
+    "address": "450 5th Ave, Downtown, Metropolis",
+    "latitude": 40.7532,
+    "longitude": -73.9822,
+    "timestamp": "2024-11-12T01:18:00.000Z",
+    "category": "Convenience & Late Night",
+    "accuracy_meters": 5
+  },
+  {
+    "id": "loc-402",
+    "name": "Blue Bottle Roasters Market St",
+    "address": "120 Market St, Metropolis",
+    "latitude": 40.7128,
+    "longitude": -74.0060,
+    "timestamp": "2024-11-12T08:35:00.000Z",
+    "category": "Coffee Shop",
+    "accuracy_meters": 3
+  },
+  {
+    "id": "loc-403",
+    "name": "Metropolis Tech Lounge (Rooftop)",
+    "address": "888 Main Blvd, Metropolis",
+    "latitude": 40.7589,
+    "longitude": -73.9851,
+    "timestamp": "2024-11-13T23:50:00.000Z",
+    "category": "Workspace & Lounge",
+    "accuracy_meters": 10
+  },
+  {
+    "id": "loc-404",
+    "name": "Strand Bookstore Alcove",
+    "address": "828 Broadway, Metropolis",
+    "latitude": 40.7333,
+    "longitude": -73.9908,
+    "timestamp": "2024-12-02T16:25:00.000Z",
+    "category": "Bookstore & Cultural",
+    "accuracy_meters": 4
+  },
+  {
+    "id": "loc-405",
+    "name": "Artisan Tea House Quiet Garden",
+    "address": "404 Elm Street, Metropolis",
+    "latitude": 40.7291,
+    "longitude": -73.9950,
+    "timestamp": "2024-12-02T22:20:00.000Z",
+    "category": "Tea House & Lounge",
+    "accuracy_meters": 6
+  },
+  {
+    "id": "loc-406",
+    "name": "Wayfare Bakery & Espresso Bar",
+    "address": "55 Pine Lane, Metropolis",
+    "latitude": 40.7061,
+    "longitude": -74.0089,
+    "timestamp": "2025-01-16T10:12:00.000Z",
+    "category": "Bakery & Coffee",
+    "accuracy_meters": 3
+  },
+  {
+    "id": "loc-407",
+    "name": "Grand Central Transit Concourse",
+    "address": "Grand Central Terminal, Metropolis",
+    "latitude": 40.7527,
+    "longitude": -73.9772,
+    "timestamp": "2025-01-17T20:58:00.000Z",
+    "category": "Transit Hub",
+    "accuracy_meters": 15
+  }
+]

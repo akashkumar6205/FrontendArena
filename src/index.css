@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  /* Ambient glow and backdrop reflections */
+  .bg-radial-amber {
+    background: radial-gradient(ellipse 70% 45% at 50% 65%, rgba(217, 119, 6, 0.22) 0%, rgba(180, 83, 9, 0.12) 35%, rgba(8, 9, 10, 0) 75%);
+  }
+
+  .text-glow-white {
+    text-shadow: 0 0 35px rgba(255, 255, 255, 0.25);
+  }
+
+  /* Specular top light effect on text */
+  .specular-top-light {
+    position: relative;
+  }
+  .specular-top-light::before {
+    content: '';
+    position: absolute;
+    top: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 68%;
+    height: 38px;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.08) 50%, transparent 80%);
+    filter: blur(14px);
+    pointer-events: none;
+    border-radius: 9999px;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #08090a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #23252a;
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3f424b;
+  }
+}
+
+/* React Flow custom dark theme styling overrides */
+.react-flow__node {
+  border-radius: 12px;
+  transition: all 0.2s ease-in-out;
+}
+
+.react-flow__controls {
+  background: #111726 !important;
+  border: 1px solid #1f293d !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5) !important;
+}
+
+.react-flow__controls-button {
+  background: #111726 !important;
+  border-bottom: 1px solid #1f293d !important;
+  color: #9ca3af !important;
+}
+
+.react-flow__controls-button:hover {
+  background: #182033 !important;
+  color: #f3f4f6 !important;
+}
+
+.react-flow__edge-path {
+  stroke-dasharray: 6;
+  animation: edgeDash 20s linear infinite;
+}
+
+@keyframes edgeDash {
+  to {
+    stroke-dashoffset: -100;
+  }
+}

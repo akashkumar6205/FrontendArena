@@ -1,0 +1,79 @@
+[
+  {
+    "id": "exp-301",
+    "title": "WeWork HotDesk Monthly Pass",
+    "amount": 250.00,
+    "currency": "USD",
+    "category": "Workspace & Office",
+    "timestamp": "2024-11-01T09:00:00.000Z",
+    "recurring": true,
+    "frequency": "Monthly",
+    "vendor": "WeWork Global"
+  },
+  {
+    "id": "exp-302",
+    "title": "High-Speed Fiber Internet",
+    "amount": 79.99,
+    "currency": "USD",
+    "category": "Utilities & Bills",
+    "timestamp": "2024-11-05T12:00:00.000Z",
+    "recurring": true,
+    "frequency": "Monthly",
+    "vendor": "Verizon Fios"
+  },
+  {
+    "id": "exp-303",
+    "title": "OpenAI API Usage",
+    "amount": 34.20,
+    "currency": "USD",
+    "category": "Software & AI",
+    "timestamp": "2024-11-12T02:25:00.000Z",
+    "recurring": false,
+    "frequency": "One-Time",
+    "vendor": "OpenAI LLC"
+  },
+  {
+    "id": "exp-304",
+    "title": "AWS Cloud Hosting Infrastructure",
+    "amount": 62.45,
+    "currency": "USD",
+    "category": "Software & Dev",
+    "timestamp": "2024-11-13T04:10:00.000Z",
+    "recurring": true,
+    "frequency": "Monthly",
+    "vendor": "Amazon Web Services"
+  },
+  {
+    "id": "exp-305",
+    "title": "Equinox Gym Membership",
+    "amount": 220.00,
+    "currency": "USD",
+    "category": "Health & Fitness",
+    "timestamp": "2024-12-01T08:00:00.000Z",
+    "recurring": true,
+    "frequency": "Monthly",
+    "vendor": "Equinox Fitness"
+  },
+  {
+    "id": "exp-306",
+    "title": "Figma Professional Plan",
+    "amount": 15.00,
+    "currency": "USD",
+    "category": "Software & Design",
+    "timestamp": "2024-12-15T10:00:00.000Z",
+    "recurring": true,
+    "frequency": "Monthly",
+    "vendor": "Figma Inc"
+  },
+  {
+    "id": "exp-307",
+    "title": "Co-Working Espresso Machine Supplies",
+    "amount": 45.00,
+    "currency": "USD",
+    "category": "Workspace & Office",
+    "timestamp": "2025-01-16T11:30:00.000Z",
+    "recurring": false,
+    "frequency": "One-Time",
+    "vendor": "La Marzocco Store"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "note-501",
+    "title": "3 AM Architecture Epiphany",
+    "content": "Finally figured out the state normalization bug! The data structures need a single unified schema with strict datetime timestamps.",
+    "timestamp": "2024-11-12T01:35:00.000Z",
+    "tags": ["Coding", "Hackathon", "Architecture"],
+    "mood": "Inspired"
+  },
+  {
+    "id": "note-502",
+    "title": "Morning Coffee Thoughts",
+    "content": "Need to focus on high-impact user flows today. Storytelling in data is all about contextual relationships, not raw charts.",
+    "timestamp": "2024-11-12T08:45:00.000Z",
+    "tags": ["Productivity", "Mindset"],
+    "mood": "Focused"
+  },
+  {
+    "id": "note-503",
+    "title": "Late Night Hackathon Sprint Note",
+    "content": "Deployment pipeline is green. Energy level high thanks to midnight ramen and synthwave playlists.",
+    "timestamp": "2024-11-14T00:30:00.000Z",
+    "tags": ["Hackathon", "Reflection"],
+    "mood": "Exhilarated"
+  },
+  {
+    "id": "note-504",
+    "title": "Bookstore Discovery",
+    "content": "Picked up a rare design anthology on cybernetics and human-computer interactions.",
+    "timestamp": "2024-12-02T16:50:00.000Z",
+    "tags": ["Reading", "Design"],
+    "mood": "Curious"
+  },
+  {
+    "id": "note-505",
+    "title": "Quiet Winter Reflection",
+    "content": "The year is winding down. Listening to classical piano while reviewing all the milestones achieved across projects.",
+    "timestamp": "2024-12-02T22:40:00.000Z",
+    "tags": ["Journal", "Reflection"],
+    "mood": "Peaceful"
+  },
+  {
+    "id": "note-506",
+    "title": "New Year Metropolitan Plan",
+    "content": "Planning the next wave of frontend innovations. Exploring React Flow and custom graph canvas renderers.",
+    "timestamp": "2025-01-16T10:30:00.000Z",
+    "tags": ["Goals", "Frontend"],
+    "mood": "Ambitious"
+  }
+]

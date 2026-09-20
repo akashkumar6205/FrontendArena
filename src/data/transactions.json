@@ -1,0 +1,152 @@
+[
+  {
+    "id": "tx-201",
+    "merchant": "7-Eleven Diner & Snacks",
+    "amount": 14.85,
+    "currency": "USD",
+    "category": "Late Night Food",
+    "timestamp": "2024-11-12T01:22:10.000Z",
+    "payment_method": "Apple Pay (Visa ****4921)",
+    "location": {
+      "name": "7-Eleven 5th Ave",
+      "address": "450 5th Ave, Downtown",
+      "city": "Metropolis"
+    }
+  },
+  {
+    "id": "tx-202",
+    "merchant": "Blue Bottle Coffee",
+    "amount": 7.50,
+    "currency": "USD",
+    "category": "Coffee & Bakery",
+    "timestamp": "2024-11-12T08:38:15.000Z",
+    "payment_method": "Contactless Visa",
+    "location": {
+      "name": "Blue Bottle Roasters",
+      "address": "120 Market St",
+      "city": "Metropolis"
+    }
+  },
+  {
+    "id": "tx-203",
+    "merchant": "GitHub Pro Subscription",
+    "amount": 10.00,
+    "currency": "USD",
+    "category": "Software & Dev",
+    "timestamp": "2024-11-13T00:00:00.000Z",
+    "payment_method": "Credit Card ****4921",
+    "location": null
+  },
+  {
+    "id": "tx-204",
+    "merchant": "Uber Eats - Midnight Ramen",
+    "amount": 28.40,
+    "currency": "USD",
+    "category": "Late Night Food",
+    "timestamp": "2024-11-13T23:52:00.000Z",
+    "payment_method": "Apple Pay (Mastercard ****8812)",
+    "location": {
+      "name": "Ramen Nagi Express",
+      "address": "888 Main Blvd",
+      "city": "Metropolis"
+    }
+  },
+  {
+    "id": "tx-205",
+    "merchant": "Shell Gas & Convenience",
+    "amount": 42.10,
+    "currency": "USD",
+    "category": "Travel & Auto",
+    "timestamp": "2024-11-14T00:25:30.000Z",
+    "payment_method": "Visa ****4921",
+    "location": {
+      "name": "Shell Highway Station 4",
+      "address": "Exit 14 Highway North",
+      "city": "Metropolis"
+    }
+  },
+  {
+    "id": "tx-206",
+    "merchant": "Strand Books & Vinyl",
+    "amount": 34.50,
+    "currency": "USD",
+    "category": "Books & Media",
+    "timestamp": "2024-12-02T16:35:00.000Z",
+    "payment_method": "Apple Pay",
+    "location": {
+      "name": "Strand Bookstore",
+      "address": "828 Broadway",
+      "city": "Metropolis"
+    }
+  },
+  {
+    "id": "tx-207",
+    "merchant": "Artisan Tea & Lounge",
+    "amount": 12.00,
+    "currency": "USD",
+    "category": "Coffee & Bakery",
+    "timestamp": "2024-12-02T22:15:00.000Z",
+    "payment_method": "Contactless Visa",
+    "location": {
+      "name": "Artisan Tea House",
+      "address": "404 Elm Street",
+      "city": "Metropolis"
+    }
+  },
+  {
+    "id": "tx-208",
+    "merchant": "B&H Photo & Electronics",
+    "amount": 149.99,
+    "currency": "USD",
+    "category": "Electronics",
+    "timestamp": "2024-12-03T19:20:00.000Z",
+    "payment_method": "Amex ****1004",
+    "location": {
+      "name": "B&H Main Superstore",
+      "address": "420 9th Ave",
+      "city": "Metropolis"
+    }
+  },
+  {
+    "id": "tx-209",
+    "merchant": "Wayfare Bakery Espresso",
+    "amount": 8.75,
+    "currency": "USD",
+    "category": "Coffee & Bakery",
+    "timestamp": "2025-01-16T10:18:00.000Z",
+    "payment_method": "Apple Pay",
+    "location": {
+      "name": "Wayfare Bakery",
+      "address": "55 Pine Lane",
+      "city": "Metropolis"
+    }
+  },
+  {
+    "id": "tx-210",
+    "merchant": "Lyft Ride - Crosstown",
+    "amount": 22.30,
+    "currency": "USD",
+    "category": "Travel & Auto",
+    "timestamp": "2025-01-17T20:55:00.000Z",
+    "payment_method": "Apple Pay",
+    "location": {
+      "name": "Downtown Transit Center",
+      "address": "Grand Central Terminal",
+      "city": "Metropolis"
+    }
+  },
+  {
+    "id": "tx-211",
+    "merchant": "Whole Foods Organic Market",
+    "amount": 86.40,
+    "currency": "USD",
+    "category": "Groceries",
+    "timestamp": "2025-01-18T09:40:00.000Z",
+    "payment_method": "Visa ****4921",
+    "location": {
+      "name": "Whole Foods Columbus Circle",
+      "address": "10 Columbus Cir",
+      "city": "Metropolis"
+    }
+  }
+]
